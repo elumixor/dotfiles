@@ -20,7 +20,8 @@ ln -s ${DOTFILES}/starship.toml ~/.config/starship.toml
 ln -s ${DOTFILES}/init.vim ~/.config/nvim/init.vim
 
 # Install stuff non-interactively
-DEBIAN_FRONTEND=noninteractive
+PREVIOUS_DEBIAN_FRONTEND=$DEBIAN_FRONTEND
+export DEBIAN_FRONTEND=noninteractive
 
 # Install packages
 sudo apt-get update
@@ -36,6 +37,8 @@ sudo apt-get install \
              # python3-dev python3-pip \
              language-pack-en \
              -y
+
+export DEBIAN_FRONTEND=$PREVIOUS_DEBIAN_FRONTEND
 
 # Install oh-my-zsh
 sh -c "$(curl -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
