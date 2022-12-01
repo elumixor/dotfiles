@@ -40,7 +40,7 @@ sudo apt-get install \
              -y
 
 # Change the default shell to zsh
-sudo chsh -s $(which zsh)
+sudo chsh -s /bin/zsh $(whoami)
 
 # Install oh-my-zsh
 curl -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh | sh -s -- --unattended

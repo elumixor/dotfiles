@@ -8,6 +8,9 @@ export DOTFILES=$HOME/dotfiles
 export LC_ALL=en_IN.UTF-8
 export LANG=en_IN.UTF-8
 
+# We need this for X11 forwarding
+export DISPLAY=$(hostname).local:0
+
 # We need this for 24bit colors
 export TERM="screen-256color"
 
