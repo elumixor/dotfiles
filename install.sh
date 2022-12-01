@@ -5,20 +5,20 @@ set -e
 DOTFILES=$(pwd)
 
 # Remove files if they exist
-rm -rf ~/.config
-rm -rf ~/.oh-my-zsh
-rm -rf ~/.zshrc
-rm -rf ~/.config
-rm -rf ~/.tmux.conf
+rm -rf ${HOME}/.config
+rm -rf ${HOME}/.oh-my-zsh
+rm -rf ${HOME}/.zshrc
+rm -rf ${HOME}/.config
+rm -rf ${HOME}/.tmux.conf
 
 # Make a directory that's needed
-mkdir -p ~/.config/nvim
+mkdir -p ${HOME}/.config/nvim
 
-ln -s ${DOTFILES}/tmux.conf ~/.tmux.conf
-ln -s ${DOTFILES}/zshrc ~/.zshrc
-ln -s ${DOTFILES}/tmux.conf ~/.tmux.conf
-ln -s ${DOTFILES}/starship.toml ~/.config/starship.toml
-ln -s ${DOTFILES}/init.vim ~/.config/nvim/init.vim
+ln -s ${DOTFILES}/tmux.conf ${HOME}/.tmux.conf
+ln -s ${DOTFILES}/zshrc ${HOME}/.zshrc
+ln -s ${DOTFILES}/tmux.conf ${HOME}/.tmux.conf
+ln -s ${DOTFILES}/starship.toml ${HOME}/.config/starship.toml
+ln -s ${DOTFILES}/init.vim ${HOME}/.config/nvim/init.vim
 
 # Install stuff non-interactively
 export DEBIAN_FRONTEND=noninteractive
@@ -50,24 +50,24 @@ sh -c "$(curl -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.
 curl -sS https://starship.rs/install.sh | sudo sh -s -- --yes
 
 # We are installing fzf via git, as the apt version is outdated
-git clone --depth 1 https://github.com/junegunn/fzf.git ~/.fzf && \
-    ~/.fzf/install --completion --key-bindings --no-update-rc
+git clone --depth 1 https://github.com/junegunn/fzf.git ${HOME}/.fzf && \
+    ${HOME}/.fzf/install --completion --key-bindings --no-update-rc
 
 # Install oh-my-zsh plugins:
 # zsh-nvm
 git clone --depth=1 https://github.com/lukechilds/zsh-nvm \
-          ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-nvm
+          ${ZSH_CUSTOM:-${HOME}/.oh-my-zsh/custom}/plugins/zsh-nvm
 
 # auto-suggestions
 git clone --depth=1 https://github.com/zsh-users/zsh-autosuggestions \
-          ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-autosuggestions
+          ${ZSH_CUSTOM:-${HOME}/.oh-my-zsh/custom}/plugins/zsh-autosuggestions
 
 # syntax highlighting
 git clone --depth=1 https://github.com/zsh-users/zsh-syntax-highlighting \
-          ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-syntax-highlighting
+          ${ZSH_CUSTOM:-${HOME}/.oh-my-zsh/custom}/plugins/zsh-syntax-highlighting
 
 # base16-shell colors
-git clone --depth=1 https://github.com/chriskempson/base16-shell.git ~/.config/base16-shell && \
+git clone --depth=1 https://github.com/chriskempson/base16-shell.git ${HOME}/.config/base16-shell && \
     mkdir $HOME/.oh-my-zsh/plugins/base16-shell && \
     ln -s $HOME/.config/base16-shell/base16-shell.plugin.zsh \
           $HOME/.oh-my-zsh/plugins/base16-shell/base16-shell.plugin.zsh
@@ -77,18 +77,18 @@ sh -c 'curl -fLo "${XDG_DATA_HOME:-$HOME/.local/share}"/nvim/site/autoload/plug.
        https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim'
 
 # Tmux Plugin Manager
-git clone --depth=1 https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
+git clone --depth=1 https://github.com/tmux-plugins/tpm ${HOME}/.tmux/plugins/tpm
 
 # We need the following to install Tmux Plugins Automatically
 tmux start-server && \
      tmux new-session -d && \
      sleep 1 && \
-     ~/.tmux/plugins/tpm/scripts/install_plugins.sh && \
+     ${HOME}/.tmux/plugins/tpm/scripts/install_plugins.sh && \
      tmux kill-server
 
 # Install NVM and node.js@14
 curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.2/install.sh | bash && \
-    export NVM_DIR=~/.nvm && \
+    export NVM_DIR=${HOME}/.nvm && \
     [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh" && \
     nvm install 14
 
