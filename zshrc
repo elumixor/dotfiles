@@ -69,3 +69,6 @@ bindkey -M emacs '^E' fzf-file-widget
 bindkey -M vicmd '^E' fzf-file-widget
 bindkey -M viins '^E' fzf-file-widget
 bindkey -r '^T'
+
+# Import custom zshrc
+[ -f ~/.zshrc.local ] && source ~/.zshrc.local
