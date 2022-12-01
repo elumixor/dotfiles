@@ -1,4 +1,5 @@
 set -x
+set -e
 
 # Make symlinks to dotfiles in home directory
 DOTFILES=$(pwd)
@@ -34,11 +35,14 @@ sudo apt-get install \
              git \
              tmux \
              neovim \
-             # python3-dev python3-pip \
+             python3-dev python3-pip \
              language-pack-en \
              -y
 
 export DEBIAN_FRONTEND=$PREVIOUS_DEBIAN_FRONTEND
+
+# Change the default shell to zsh
+sudo chsh -s $(which zsh)
 
 # Install oh-my-zsh
 sh -c "$(curl -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
