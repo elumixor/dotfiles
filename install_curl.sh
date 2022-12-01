@@ -2,7 +2,7 @@
 
 # Install git
 sudo apt-get update
-sudo apt-get install git
+sudo apt-get install git -y
 
 # Clone the repository
 git clone https://github.com/elumixor/dotfiles.git
