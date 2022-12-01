@@ -101,8 +101,8 @@ curl https://repo.anaconda.com/miniconda/Miniconda3-py39_4.12.0-Linux-x86_64.sh 
 nvim --headless +PlugInstall +qall
 
 # Replace the generated zshrc and starship.toml
-rm ~/.zshrc && ln -s ${DOTFILES}/zshrc ~/.zshrc
-rm ~/.config/starshp.toml && ln -s ${DOTFILES}/starship.toml ~/.config/starship.toml
+rm -rf ~/.zshrc && ln -s ${DOTFILES}/zshrc ~/.zshrc
+rm -rf ~/.config/starshp.toml && ln -s ${DOTFILES}/starship.toml ~/.config/starship.toml
 
 # Start the zsh shell
 exec zsh
