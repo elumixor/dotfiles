@@ -81,7 +81,7 @@ git clone --depth=1 https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
 # We need the following to install Tmux Plugins Automatically
 tmux start-server && \
      tmux new-session -d && \
-     sleep 1 && \
+     sleep 5 && \
      ~/.tmux/plugins/tpm/scripts/install_plugins.sh && \
      tmux kill-server
 
