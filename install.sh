@@ -21,8 +21,9 @@ ln -s ${DOTFILES}/starship.toml ~/.config/starship.toml
 ln -s ${DOTFILES}/init.vim ~/.config/nvim/init.vim
 
 # Install stuff non-interactively
-PREVIOUS_DEBIAN_FRONTEND=$DEBIAN_FRONTEND
 export DEBIAN_FRONTEND=noninteractive
+TZ=Europe/Prague
+ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
 
 # Install packages
 sudo apt-get update
@@ -38,8 +39,6 @@ sudo apt-get install \
              python3-dev python3-pip \
              language-pack-en \
              -y
-
-export DEBIAN_FRONTEND=$PREVIOUS_DEBIAN_FRONTEND
 
 # Change the default shell to zsh
 sudo chsh -s $(which zsh)
