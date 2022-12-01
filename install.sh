@@ -22,7 +22,7 @@ ln -s ${DOTFILES}/init.vim ~/.config/nvim/init.vim
 # Install stuff non-interactively
 export DEBIAN_FRONTEND=noninteractive
 TZ=Europe/Prague
-ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
+sudo ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
 
 # Install packages
 sudo apt-get update
