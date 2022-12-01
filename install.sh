@@ -1,7 +1,7 @@
 # Make symlinks to dotfiles in home directory
 DOTFILES=$(pwd)
 
-mkdir -p .config/nvim
+mkdir -p ~/.config/nvim
 
 ln -s ${DOTFILES}/tmux.conf ~/.tmux.conf
 ln -s ${DOTFILES}/zshrc ~/.zshrc
