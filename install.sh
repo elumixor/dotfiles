@@ -16,7 +16,6 @@ mkdir -p ~/.config/nvim
 
 ln -s ${DOTFILES}/tmux.conf ~/.tmux.conf
 ln -s ${DOTFILES}/zshrc ~/.zshrc
-ln -s ${DOTFILES}/tmux.conf ~/.tmux.conf
 ln -s ${DOTFILES}/starship.toml ~/.config/starship.toml
 ln -s ${DOTFILES}/init.vim ~/.config/nvim/init.vim
 
