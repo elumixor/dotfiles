@@ -1,6 +1,16 @@
+set -x
+
 # Make symlinks to dotfiles in home directory
 DOTFILES=$(pwd)
 
+# Remove files if they exist
+rm -rf ~/.config
+rm -rf ~/.oh-my-zsh
+rm -rf ~/.zshrc
+rm -rf ~/.config
+rm -rf ~/.tmux.conf
+
+# Make a directory that's needed
 mkdir -p ~/.config/nvim
 
 ln -s ${DOTFILES}/tmux.conf ~/.tmux.conf
