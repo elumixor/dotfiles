@@ -11,3 +11,4 @@ git clone https://github.com/elumixor/dotfiles.git
 cd dotfiles
 chmod +x install.sh
 ./install.sh
+cd ..
