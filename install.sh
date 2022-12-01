@@ -43,7 +43,7 @@ sudo apt-get install \
 sudo chsh -s $(which zsh)
 
 # Install oh-my-zsh
-sh -c "$(curl -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
+curl -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh | sh -s -- --unattended
 
 # Install starship
 curl -sS https://starship.rs/install.sh | sudo sh -s -- --yes
