@@ -10,6 +10,7 @@ rm -rf ~/.oh-my-zsh
 rm -rf ~/.zshrc
 rm -rf ~/.config
 rm -rf ~/.tmux.conf
+rm -rf ~/.tmux
 
 # Make a directory that's needed
 mkdir -p ~/.config/nvim
