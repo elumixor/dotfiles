@@ -97,7 +97,7 @@ curl https://repo.anaconda.com/miniconda/Miniconda3-py39_4.12.0-Linux-x86_64.sh 
     rm conda.sh
 
 # Install the neovim plugins
-nvim --headless +PlugInstall +qall &2> /dev/null
+nvim --headless +PlugInstall +qall
 
 # Replace the generated zshrc and starship.toml
 rm ~/.zshrc && ln -s ${DOTFILES}/zshrc ~/.zshrc
