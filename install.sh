@@ -103,6 +103,7 @@ nvim --headless +PlugInstall +qall
 # Replace the generated zshrc and starship.toml
 rm -rf ~/.zshrc && ln -s ${DOTFILES}/zshrc ~/.zshrc
 rm -rf ~/.config/starshp.toml && ln -s ${DOTFILES}/starship.toml ~/.config/starship.toml
+rm -rf ~/.condarc && ln -s ${DOTFILES}/condarc ~/.condarc
 
 # Start the zsh shell
 exec zsh
