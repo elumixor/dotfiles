@@ -15,8 +15,6 @@ rm -rf ~/.tmux.conf
 mkdir -p ~/.config/nvim
 
 ln -s ${DOTFILES}/tmux.conf ~/.tmux.conf
-ln -s ${DOTFILES}/zshrc ~/.zshrc
-ln -s ${DOTFILES}/starship.toml ~/.config/starship.toml
 ln -s ${DOTFILES}/init.vim ~/.config/nvim/init.vim
 
 # Install stuff non-interactively
@@ -99,4 +97,11 @@ curl https://repo.anaconda.com/miniconda/Miniconda3-py39_4.12.0-Linux-x86_64.sh 
     rm conda.sh
 
 # Install the neovim plugins
-nvim --headless +PlugInstall +qall
+nvim --headless +PlugInstall +qall &2> /dev/null
+
+# Replace the generated zshrc and starship.toml
+rm ~/.zshrc && ln -s ${DOTFILES}/zshrc ~/.zshrc
+rm ~/.config/starshp.toml && ln -s ${DOTFILES}/starship.toml ~/.config/starship.toml
+
+# Start the zsh shell
+exec zsh
