@@ -69,5 +69,8 @@ bindkey -M vicmd '^E' fzf-file-widget
 bindkey -M viins '^E' fzf-file-widget
 bindkey -r '^T'
 
+# Open vim on Alt+V
+bindkey -s '^[v' 'vim\n'
+
 # Import custom zshrc
 [ -f ~/.zshrc.local ] && source ~/.zshrc.local
