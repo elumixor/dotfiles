@@ -19,7 +19,7 @@ export TERM="xterm-256color"
 export EDITOR=nvim
 
 # Auto start TMUX
-# ZSH_TMUX_AUTOSTART=true
+ZSH_TMUX_AUTOSTART=true
 
 # Set theme
 ZSH_THEME="agnoster"
