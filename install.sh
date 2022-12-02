@@ -109,6 +109,9 @@ curl https://repo.anaconda.com/miniconda/Miniconda3-py39_4.12.0-Linux-x86_64.sh 
     zsh conda.sh -b && \
     rm conda.sh
 
+# Install the italics and colors for tmux
+tic +x ${DOTFILES}/tmux.terminfo
+
 # Install the neovim plugins
 nvim --headless +PlugInstall +qall
 

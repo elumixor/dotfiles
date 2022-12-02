@@ -11,15 +11,15 @@ export LANG=en_IN.UTF-8
 # We need this for X11 forwarding
 export DISPLAY=$(hostname).local:0
 
-# We need this for 24bit colors
-export TERM="screen-256color"
+# We need this for 24bit colors, as well as italics
+export TERM="xterm-256color"
 
 # Editor variable
 # (needed for when programs search for the default editor)
 export EDITOR=nvim
 
 # Auto start TMUX
-ZSH_TMUX_AUTOSTART=true
+# ZSH_TMUX_AUTOSTART=true
 
 # Set theme
 ZSH_THEME="agnoster"
