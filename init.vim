@@ -10,8 +10,8 @@ Plug 'rktjmp/lush.nvim'
 " The color scheme we actually use
 Plug 'elumixor/nvim-colorscheme'
 
-" Build system that is used to import our lua color theme
-Plug 'rktjmp/shipwright.nvim'
+" Startify
+Plug 'mhinz/vim-startify'
 
 call plug#end()
 
@@ -27,6 +27,14 @@ set cursorline
 " Enable display of whitespaces
 set listchars=space:·
 set list
+
+" Transform tabs to spaces with 4 spaces
+set tabstop=4
+set shiftwidth=4
+set expandtab
+
+" Include custom startify config
+source ~/.config/nvim/startify_config.vim
 
 lua << EOF
 -- Include our color scheme

@@ -39,6 +39,18 @@ sudo apt-get install \
              language-pack-en \
              -y
 
+# Install bat (like cat but with syntax highlighting)
+wget https://github.com/sharkdp/bat/releases/download/v0.22.1/bat-v0.22.1-x86_64-unknown-linux-gnu.tar.gz
+tar -xvf bat-v0.22.1-x86_64-unknown-linux-gnu.tar.gz
+sudo mv bat-v0.22.1-x86_64-unknown-linux-gnu/bat /usr/local/bin/bat
+rm -rf bat-v0.22.1-x86_64-unknown-linux-gnu.tar.gz bat-v0.22.1-x86_64-unknown-linux-gnu
+
+# Install fd
+wget https://github.com/sharkdp/fd/releases/download/v8.5.3/fd-v8.5.3-x86_64-unknown-linux-gnu.tar.gz
+tar -xvf fd-v8.5.3-x86_64-unknown-linux-gnu.tar.gz
+sudo mv fd-v8.5.3-x86_64-unknown-linux-gnu/fd /usr/local/bin/fd
+rm -rf fd-v8.5.3-x86_64-unknown-linux-gnu.tar.gz fd-v8.5.3-x86_64-unknown-linux-gnu
+
 # Change the default shell to zsh
 sudo chsh -s /bin/zsh $(whoami)
 

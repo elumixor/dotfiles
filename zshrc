@@ -55,9 +55,8 @@ export NVM_DIR=~/.nvm
 # Conda
 source $DOTFILES/conda_init.sh
 
-# Initialize FZF
-export FZF_DEFAULT_OPTS="--height=40% --info=inline --border --margin=2 --padding=2 --color=bg+:#3F3F3F,border:#6B6B6B,spinner:#98BC99,hl:#719872,fg:#D9D9D9,header:#719872,info:#BDBB72,pointer:#E12672,marker:#E17899,fg+:#D9D9D9,preview-bg:#3F3F3F,prompt:#98BEDE,hl+:#98BC99 --preview='less {}' --bind shift-up:preview-page-up,shift-down:preview-page-down"
-[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+# Source FZF config and start it
+source $DOTFILES/fzf.sh
 
 # -- KEY BINDINGS -- #
 # Execute suggestion on Ctrl+Space
