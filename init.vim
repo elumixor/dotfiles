@@ -3,7 +3,7 @@ call plug#begin()
 " GitHub Copilot
 Plug 'github/copilot.vim'
 
-" Color scheme interactive editor
+" Color scheme interactive editor which we also need to load the colorscheme
 " start by :LushRunQuickstart
 Plug 'rktjmp/lush.nvim'
 
@@ -33,6 +33,9 @@ Plug 'nvim-lua/plenary.nvim' " This is required for telescope
 Plug 'nvim-telescope/telescope.nvim', { 'tag': '0.1.0' }
 Plug 'nvim-telescope/telescope-fzf-native.nvim', { 'do': 'make' } " To use fzf syntax in the telescope
 
+" Conquer of Completion
+Plug 'neoclide/coc.nvim', {'branch': 'release'}
+
 call plug#end()
 
 " Set relative line numbers
@@ -52,6 +55,10 @@ set list
 set tabstop=4
 set shiftwidth=4
 set expandtab
+
+" Set signcolumn to always so that the editor doesn't jump
+" when the git gutter is added or else
+set signcolumn=yes
 
 " Include custom startify config
 source ~/.config/nvim/startify_config.vim

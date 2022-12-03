@@ -112,8 +112,17 @@ curl https://repo.anaconda.com/miniconda/Miniconda3-py39_4.12.0-Linux-x86_64.sh 
 # Install the italics and colors for tmux
 tic +x ${DOTFILES}/tmux.terminfo
 
+# Install the python3 provider for neovim
+# Also install pylint
+pip3 install --user --upgrade pynvim pylint
+
+# Install the node provider for neovim
+npm install -g neovim
+
 # Install the neovim plugins
 nvim --headless +PlugInstall +qall
+# Install the coc extensions
+nvim --headless +'CocInstall -sync coc-json coc-tsserver coc-pyright coc-html coc-css coc-yaml coc-vimlsp coc-rls coc-clangd' +qall
 
 # Replace the generated zshrc and starship.toml
 rm -rf ~/.zshrc && ln -s ${DOTFILES}/zshrc ~/.zshrc
