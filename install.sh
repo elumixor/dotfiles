@@ -114,20 +114,25 @@ tic +x ${DOTFILES}/tmux.terminfo
 
 # Install the python3 provider for neovim
 # Also install pylint
-pip3 install --user --upgrade pynvim pylint
+# Also install rope - for refactoring
+# Also install autopep8 - for autoformatting
+pip3 install --user --upgrade pynvim pylint rope autopep8
 
 # Install the node provider for neovim
 npm install -g neovim
 
 # Install the neovim plugins
-nvim --headless +PlugInstall +qall
+nvim --headless +PlugInstall +TSUpdateSync +qall
 # Install the coc extensions
 nvim --headless +'CocInstall -sync coc-json coc-tsserver coc-pyright coc-html coc-css coc-yaml coc-vimlsp coc-rls coc-clangd' +qall
+# Install languages for treesitter
+nvim --headless +'TSInstallSync python typescript javascript vim bash json cpp yaml toml' +qall
 
 # Replace the generated zshrc and starship.toml
 rm -rf ~/.zshrc && ln -s ${DOTFILES}/zshrc ~/.zshrc
 rm -rf ~/.config/starshp.toml && ln -s ${DOTFILES}/starship.toml ~/.config/starship.toml
 rm -rf ~/.condarc && ln -s ${DOTFILES}/condarc ~/.condarc
+rm -rf $HOME/.config/pycodestyle && ln -s ${DOTFILES}/pycodestyle $HOME/.config/pycodestyle
 
 # Start the zsh shell
 exec zsh
