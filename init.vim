@@ -10,6 +10,9 @@ Plug 'rktjmp/lush.nvim'
 " The color scheme we actually use
 Plug 'elumixor/nvim-colorscheme'
 
+" Tmux-vim navigation
+Plug 'christoomey/vim-tmux-navigator'
+
 " Startify
 Plug 'mhinz/vim-startify'
 
@@ -118,12 +121,6 @@ nnoremap <silent> <A-g> :G<CR>
 " Include custom startify config
 source ~/dotfiles/coc_settings.vim
 
-" Ctrl+hjkl to move between windows
-nnoremap <silent> <C-h> <C-w>h
-nnoremap <silent> <C-j> <C-w>j
-nnoremap <silent> <C-k> <C-w>k
-nnoremap <silent> <C-l> <C-w>l
-
 " Move line up and down with Alt+Shift+j/k
 nnoremap <silent> <A-S-j> :m .+1<CR>==
 nnoremap <silent> <A-S-k> :m .-2<CR>==
@@ -158,8 +155,8 @@ set foldexpr=nvim_treesitter#foldexpr()
 set nofoldenable " Disable folding by default
 
 " Increase fold with Crtrl+ and decrease with Ctrl-
-nnoremap <silent> <C-_> zc
-nnoremap <silent> <C-+> zo
+" nnoremap <silent> <C-_> zc
+" nnoremap <silent> <C-+> zo
 
 lua << EOF
 -- Include our color scheme
