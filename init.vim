@@ -23,7 +23,7 @@ Plug 'preservim/nerdtree'
 Plug 'Xuyuanp/nerdtree-git-plugin'
 
 " Git gutter in the code
-Plug 'airblade/vim-gitgutter'
+Plug 'lewis6991/gitsigns.nvim'
 
 " Git commands made simple by Fugitive
 Plug 'tpope/vim-fugitive'
@@ -106,10 +106,6 @@ set updatetime=100
 nnoremap <silent> <A-u> :GitGutterUndo<CR>
 nnoremap <silent> <A-r> :GitGutterRedo<CR>
 
-" Git Gutter jump with Alt+j and Alt+k
-nnoremap <silent> <A-j> :GitGutterNextHunk<CR>
-nnoremap <silent> <A-k> :GitGutterPrevHunk<CR>
-
 " Git Gutter stage with Alt+s
 nnoremap <silent> <A-s> :GitGutterStageHunk<CR>
 
@@ -139,6 +135,7 @@ autocmd FileType conf,fstab       let b:comment_leader = '#'
 autocmd FileType tex              let b:comment_leader = '%'
 autocmd FileType mail             let b:comment_leader = '>'
 autocmd FileType vim              let b:comment_leader = '"'
+autocmd FileType lua              let b:comment_leader = '--'
 function! CommentToggle()
     execute ':silent! s/\([^ ]\)/' . escape(b:comment_leader,'\/') . ' \1/'
     execute ':silent! s/^\( *\)' . escape(b:comment_leader,'\/') . ' \?' . escape(b:comment_leader,'\/') . ' \?/\1/'
@@ -159,45 +156,8 @@ set nofoldenable " Disable folding by default
 " nnoremap <silent> <C-+> zo
 
 lua << EOF
--- Include our color scheme
--- require('meliora')
-
--- Setup telescope with extensions
-require('telescope').setup()
-require('telescope').load_extension('fzf')
-
--- Setup treesitter
-require('nvim-treesitter.configs').setup {
-  highlight = {
-    enable = true,
-  },
-  indent = {
-    enable = true,
-  },
-  incremental_selection = {
-    enable = true,
-    keymaps = {
-      init_selection = "gnn",
-      node_incremental = "grn",
-      scope_incremental = "grc",
-      node_decremental = "grm",
-    },
-  },
-  textobjects = {
-    select = {
-      enable = true,
-      keymaps = {
-        ["af"] = "@function.outer",
-        ["if"] = "@function.inner",
-        ["ac"] = "@class.outer",
-        ["ic"] = "@class.inner",
-      },
-    },
-  },
-}
-
-vim.o.foldtext = [[substitute(getline(v:foldstart),'\\\\t',repeat('\\ ',&tabstop),'g') . ' (' . (v:foldend - v:foldstart + 1) . ' lines)']]
-
+-- Load config
+dofile(os.getenv("DOTFILES")..'/init.lua')
 EOF
 
 colorscheme meliora
