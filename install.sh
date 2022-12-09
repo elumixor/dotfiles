@@ -134,5 +134,8 @@ rm -rf ~/.config/starshp.toml && ln -s ${DOTFILES}/starship.toml ~/.config/stars
 rm -rf ~/.condarc && ln -s ${DOTFILES}/condarc ~/.condarc
 rm -rf $HOME/.config/pycodestyle && ln -s ${DOTFILES}/pycodestyle $HOME/.config/pycodestyle
 
+# Settings for the CoC
+ln -s ${DOTFILES}/coc-settings.json ${HOME}/.config/nvim/coc-settings.json
+
 # Start the zsh shell
 exec zsh

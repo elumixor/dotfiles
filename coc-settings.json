@@ -1,0 +1,13 @@
+{
+    "diagnostic.enableMessage": "never",
+    "diagnostic.enableSign": true,
+    "diagnostic.virtualText": true,
+    "diagnostic.virtualTextAlign": "after",
+    "diagnostic.virtualTextCurrentLineOnly": false,
+    "dialog.rounded": true,
+    "suggest.virtualText": true,
+    "diagnostic.errorSign": "",
+    "diagnostic.hintSign": "",
+    "diagnostic.infoSign": "",
+    "diagnostic.warningSign": "",
+}

@@ -25,8 +25,15 @@ Plug 'Xuyuanp/nerdtree-git-plugin'
 " Git gutter in the code
 Plug 'lewis6991/gitsigns.nvim'
 
+" Trouble - show errors inline
+Plug 'kyazdani42/nvim-web-devicons'
+Plug 'folke/trouble.nvim'
+
 " Git commands made simple by Fugitive
 Plug 'tpope/vim-fugitive'
+
+" Scrollbar
+Plug 'petertriho/nvim-scrollbar'
 
 " Icons for NERDTree
 Plug 'ryanoasis/vim-devicons'
@@ -151,9 +158,8 @@ set foldmethod=expr
 set foldexpr=nvim_treesitter#foldexpr()
 set nofoldenable " Disable folding by default
 
-" Increase fold with Crtrl+ and decrease with Ctrl-
-" nnoremap <silent> <C-_> zc
-" nnoremap <silent> <C-+> zo
+" Enable Trouble on g + L
+nmap <silent> gL <cmd>call coc#rpc#request('fillDiagnostics', [bufnr('%')])<CR><cmd>Trouble loclist<CR>`
 
 lua << EOF
 -- Load config
