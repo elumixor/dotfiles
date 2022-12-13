@@ -47,6 +47,9 @@ Plug 'nvim-telescope/telescope-fzf-native.nvim', { 'do': 'make' } " To use fzf s
 Plug 'nvim-treesitter/nvim-treesitter'
 Plug 'nvim-treesitter/nvim-treesitter-textobjects'
 
+" Sticky header while srolling
+Plug 'nvim-treesitter/nvim-treesitter-context'
+
 " Conquer of Completion
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
 
@@ -127,6 +130,7 @@ source ~/dotfiles/coc_settings.vim
 " Move line up and down with Alt+Shift+j/k
 nnoremap <silent> <A-S-j> :m .+1<CR>==
 nnoremap <silent> <A-S-k> :m .-2<CR>==
+
 " Move lines in visual mode
 vnoremap <silent> <A-S-j> :m '>+1<CR>gv=gv
 vnoremap <silent> <A-S-k> :m '<-2<CR>gv=gv
@@ -134,6 +138,9 @@ vnoremap <silent> <A-S-k> :m '<-2<CR>gv=gv
 " Move block up and down with Alt+o/O
 " nnoremap <silent> <A-o> :m '}-1<CR>==
 " nnoremap <silent> <A-O> :m '{+1<CR>==
+
+" Clear search selection on Esc
+nnoremap <CR> :noh<CR><CR>
 
 " Comment code on Ctrl+/ in both normal and visual mode
 autocmd FileType c,cpp,java,scala let b:comment_leader = '//'
