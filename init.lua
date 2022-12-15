@@ -11,6 +11,9 @@ dofile(os.getenv("DOTFILES")..'/trouble_config.lua')
 -- Setup git signs
 dofile(os.getenv("DOTFILES")..'/gitsigns_config.lua')
 
+-- Setup telescope
+dofile(os.getenv("DOTFILES")..'/telescope_config.lua')
+
 -- Setup Scrollbar
 require("scrollbar").setup({
     handlers = {

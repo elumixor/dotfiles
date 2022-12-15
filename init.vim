@@ -97,6 +97,9 @@ set scrolloff=2
 set sidescrolloff=10
 set nowrap
 
+" Set textwidth to 80
+set textwidth=80
+
 " We'll remap Ctrl+u and Ctrl+d to just move the cursor up and down by 20 lines
 nnoremap <C-u> 20k
 nnoremap <C-d> 20j
@@ -112,11 +115,6 @@ autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isT
 
 " Use NERD Fonts for the Git Gutter
 let g:NERDTreeGitStatusUseNerdFonts = 1
-
-" Search git files with Telescope on Ctrl+e
-nnoremap <silent> <C-e> :Telescope git_files<CR>
-" Search string in files with Ctrl+Shift+F
-nnoremap <silent> <C-S-F> :Telescope live_grep<CR>
 
 " Update Git Gutter more often
 set updatetime=100
@@ -157,8 +155,10 @@ autocmd FileType mail                                   let b:comment_leader = '
 autocmd FileType vim                                    let b:comment_leader = '"'
 autocmd FileType lua                                    let b:comment_leader = '--'
 function! CommentToggle()
-    execute ':silent! s/\([^ ]\)/' . escape(b:comment_leader,'\/') . ' \1/'
-    execute ':silent! s/^\( *\)' . escape(b:comment_leader,'\/') . ' \?' . escape(b:comment_leader,'\/') . ' \?/\1/'
+    if exists("b:comment_leader")
+        execute ':silent! s/\([^ ]\)/' . escape(b:comment_leader,'\/') . ' \1/'
+        execute ':silent! s/^\( *\)' . escape(b:comment_leader,'\/') . ' \?' . escape(b:comment_leader,'\/') . ' \?/\1/'
+    endif
 endfunction
 map <silent> <C-_> :call CommentToggle()<CR>
 vmap <silent> <C-_> :call CommentToggle()<CR>
@@ -184,7 +184,21 @@ let g:startify_session_persistence = 1
 nmap <silent> gL <cmd>call coc#rpc#request('fillDiagnostics', [bufnr('%')])<CR><cmd>Trouble loclist<CR>`
 
 " Use markdown in VimWiki
-let g:vimwiki_list = [{'path': '~/vimwiki/', 'syntax': 'markdown', 'ext': '.md'}]
+" Read the paths from the ~.vimwiki file
+let g:vimwiki_list = []
+" Check if the file exists
+if filereadable(expand('~/.vimwiki'))
+    " Read the file
+    let lines = readfile(expand('~/.vimwiki'))
+    " Iterate over the lines
+    for line in lines
+        " Split the line by the comma
+        let split_line = split(line, ',')
+        " Add the new wiki to the list
+        call add(g:vimwiki_list, {'path': split_line[0], 'syntax': 'markdown', 'ext': '.md'})
+    endfor
+endif
+
 " Don't treat all md files as VimWiki
 let g:vimwiki_global_ext = 0
 
