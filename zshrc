@@ -1,6 +1,9 @@
 # Path to your oh-my-zsh installation.
 export ZSH="$HOME/.oh-my-zsh"
 
+# Add .local/bin to path
+export PATH=$PATH:$HOME/.local/bin
+
 # Set the dotfiles variable
 export DOTFILES=$HOME/dotfiles
 

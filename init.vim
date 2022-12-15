@@ -105,7 +105,7 @@ nnoremap <C-u> 20k
 nnoremap <C-d> 20j
 
 " Include custom startify config
-source ~/.config/nvim/startify_config.vim
+source ~/dotfiles/startify_config.vim
 
 " Switch to NERDTree on Alt+f
 nnoremap <silent> <A-f> :NERDTreeFind<CR>
@@ -129,7 +129,7 @@ nnoremap <silent> <A-s> :GitGutterStageHunk<CR>
 " Alt+g to show Git summary window
 nnoremap <silent> <A-g> :G<CR>
 
-" Include custom startify config
+" Include custom coc settings
 source ~/dotfiles/coc_settings.vim
 
 " Include custom lightline config
