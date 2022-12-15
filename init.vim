@@ -35,6 +35,12 @@ Plug 'tpope/vim-fugitive'
 " Scrollbar
 Plug 'petertriho/nvim-scrollbar'
 
+" Lightline
+Plug 'itchyny/lightline.vim'
+
+" Vim Wiki
+Plug 'vimwiki/vimwiki'
+
 " Icons for NERDTree
 Plug 'ryanoasis/vim-devicons'
 
@@ -77,6 +83,9 @@ set tabstop=4
 set shiftwidth=4
 set expandtab
 
+" Insert is unnecesary because the lightline already shows the mode
+set noshowmode
+
 " Set signcolumn to always so that the editor doesn't jump
 " when the git gutter is added or else
 set signcolumn=yes
@@ -96,7 +105,7 @@ nnoremap <C-d> 20j
 source ~/.config/nvim/startify_config.vim
 
 " Switch to NERDTree on Alt+f
-nnoremap <silent> <A-f> :NERDTree<CR>
+nnoremap <silent> <A-f> :NERDTreeFind<CR>
 
 " Close NERDTree if it's the last window
 autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
@@ -127,6 +136,9 @@ nnoremap <silent> <A-g> :G<CR>
 " Include custom startify config
 source ~/dotfiles/coc_settings.vim
 
+" Include custom lightline config
+source ~/dotfiles/lightline_config.vim
+
 " Move line up and down with Alt+Shift+j/k
 nnoremap <silent> <A-S-j> :m .+1<CR>==
 nnoremap <silent> <A-S-k> :m .-2<CR>==
@@ -140,16 +152,16 @@ vnoremap <silent> <A-S-k> :m '<-2<CR>gv=gv
 " nnoremap <silent> <A-O> :m '{+1<CR>==
 
 " Clear search selection on Esc
-nnoremap <CR> :noh<CR><CR>
+nnoremap <silent> <CR> :noh<CR><CR>
 
 " Comment code on Ctrl+/ in both normal and visual mode
-autocmd FileType c,cpp,java,scala let b:comment_leader = '//'
-autocmd FileType sh,ruby,python   let b:comment_leader = '#'
-autocmd FileType conf,fstab       let b:comment_leader = '#'
-autocmd FileType tex              let b:comment_leader = '%'
-autocmd FileType mail             let b:comment_leader = '>'
-autocmd FileType vim              let b:comment_leader = '"'
-autocmd FileType lua              let b:comment_leader = '--'
+autocmd FileType c,cpp,java,scala,js,ts,json   let b:comment_leader = '//'
+autocmd FileType sh,ruby,python                let b:comment_leader = '#'
+autocmd FileType conf,fstab                    let b:comment_leader = '#'
+autocmd FileType tex                           let b:comment_leader = '%'
+autocmd FileType mail                          let b:comment_leader = '>'
+autocmd FileType vim                           let b:comment_leader = '"'
+autocmd FileType lua                           let b:comment_leader = '--'
 function! CommentToggle()
     execute ':silent! s/\([^ ]\)/' . escape(b:comment_leader,'\/') . ' \1/'
     execute ':silent! s/^\( *\)' . escape(b:comment_leader,'\/') . ' \?' . escape(b:comment_leader,'\/') . ' \?/\1/'
@@ -164,6 +176,15 @@ nnoremap <silent> <A-q> :q<CR>
 set foldmethod=expr
 set foldexpr=nvim_treesitter#foldexpr()
 set nofoldenable " Disable folding by default
+
+" Ignore some files in the NERDTree
+let NERDTreeIgnore = ['\.pyc$', '__pycache__']
+
+" Show hidden files
+let NERDTreeShowHidden = 1
+
+" Automatically save sessions
+let g:startify_session_persistence = 1
 
 " Enable Trouble on g + L
 nmap <silent> gL <cmd>call coc#rpc#request('fillDiagnostics', [bufnr('%')])<CR><cmd>Trouble loclist<CR>`

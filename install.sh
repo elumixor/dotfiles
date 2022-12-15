@@ -124,7 +124,7 @@ npm install -g neovim
 # Install the neovim plugins
 nvim --headless +PlugInstall +TSUpdateSync +qall
 # Install the coc extensions
-nvim --headless +'CocInstall -sync coc-json coc-tsserver coc-pyright coc-html coc-css coc-yaml coc-vimlsp coc-rls coc-clangd' +qall
+nvim --headless +'CocInstall -sync coc-json coc-tsserver coc-eslint coc-prettier coc-pyright coc-html coc-css coc-yaml coc-vimlsp coc-rls coc-clangd' +qall
 # Install languages for treesitter
 nvim --headless +'TSInstallSync python typescript javascript vim bash json cpp yaml toml' +qall
 

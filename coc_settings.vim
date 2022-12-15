@@ -2,18 +2,17 @@
 nmap <silent> [g <Plug>(coc-diagnostic-prev)
 nmap <silent> ]g <Plug>(coc-diagnostic-next)
 
-" Trigger completion on Ctrl+Space
-inoremap <silent><expr> <C-Space> coc#refresh()
+" Trigger completion on Ctrl+p
+inoremap <silent><expr> <C-p> coc#refresh()
 
 " Accept completion on Enter and Tab
 inoremap <silent><expr> <CR> coc#pum#visible() ? coc#pum#confirm()
                               \: "\<C-g>u\<CR>\<c-r>=coc#on_enter()\<CR>"
-" The bellow stops copilot
 inoremap <silent><expr> <Tab> coc#pum#visible() ? coc#pum#confirm()
                               \: "\<C-g>u\<CR>\<c-r>=coc#on_enter()\<CR>"
 
-" Copilot accept on Tab, but only if coc suggestions are not visible
-imap <silent><script><expr> <Tab> coc#pum#visible() ? coc#pum#confirm() : copilot#Accept("\<CR>")
+" Copilot accept on Ctrl+Space, then return to the normal mode
+imap <silent><script><expr> <C-Space> copilot#Accept("\<CR>") . "<Esc>"
 let g:copilot_no_tab_map = v:true
 
 " GoTo code navigation.

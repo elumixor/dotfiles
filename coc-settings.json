@@ -1,13 +1,10 @@
 {
-    "diagnostic.enableMessage": "never",
-    "diagnostic.enableSign": true,
-    "diagnostic.virtualText": true,
-    "diagnostic.virtualTextAlign": "after",
-    "diagnostic.virtualTextCurrentLineOnly": false,
-    "dialog.rounded": true,
-    "suggest.virtualText": true,
-    "diagnostic.errorSign": "",
-    "diagnostic.hintSign": "",
-    "diagnostic.infoSign": "",
-    "diagnostic.warningSign": "",
+  "diagnostic.floatConfig": { "winblend": 5 },
+  "diagnostic.refreshOnInsertMode": true,
+  "dialog.rounded": false,
+  "suggest.virtualText": true,
+  "diagnostic.errorSign": "",
+  "diagnostic.hintSign": "",
+  "diagnostic.infoSign": "",
+  "diagnostic.warningSign": ""
 }
