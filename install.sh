@@ -37,6 +37,7 @@ sudo apt-get install \
              neovim \
              python3-dev python3-pip \
              language-pack-en \
+             ripgrep \
              -y
 
 # Install bat (like cat but with syntax highlighting)

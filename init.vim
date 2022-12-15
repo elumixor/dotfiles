@@ -113,10 +113,10 @@ autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isT
 " Use NERD Fonts for the Git Gutter
 let g:NERDTreeGitStatusUseNerdFonts = 1
 
-" Seach git files with Telescope on Ctrl+e
+" Search git files with Telescope on Ctrl+e
 nnoremap <silent> <C-e> :Telescope git_files<CR>
-
-"region Git Gutter
+" Search string in files with Ctrl+Shift+F
+nnoremap <silent> <C-S-F> :Telescope live_grep<CR>
 
 " Update Git Gutter more often
 set updatetime=100
@@ -127,8 +127,6 @@ nnoremap <silent> <A-r> :GitGutterRedo<CR>
 
 " Git Gutter stage with Alt+s
 nnoremap <silent> <A-s> :GitGutterStageHunk<CR>
-
-"endregion (Git Gutter)
 
 " Alt+g to show Git summary window
 nnoremap <silent> <A-g> :G<CR>
@@ -147,21 +145,17 @@ nnoremap <silent> <A-S-k> :m .-2<CR>==
 vnoremap <silent> <A-S-j> :m '>+1<CR>gv=gv
 vnoremap <silent> <A-S-k> :m '<-2<CR>gv=gv
 
-" Move block up and down with Alt+o/O
-" nnoremap <silent> <A-o> :m '}-1<CR>==
-" nnoremap <silent> <A-O> :m '{+1<CR>==
-
 " Clear search selection on Esc
 nnoremap <silent> <CR> :noh<CR><CR>
 
 " Comment code on Ctrl+/ in both normal and visual mode
-autocmd FileType c,cpp,java,scala,js,ts,json   let b:comment_leader = '//'
-autocmd FileType sh,ruby,python                let b:comment_leader = '#'
-autocmd FileType conf,fstab                    let b:comment_leader = '#'
-autocmd FileType tex                           let b:comment_leader = '%'
-autocmd FileType mail                          let b:comment_leader = '>'
-autocmd FileType vim                           let b:comment_leader = '"'
-autocmd FileType lua                           let b:comment_leader = '--'
+autocmd FileType c,cpp,java,scala,javascript,typescript let b:comment_leader = '//'
+autocmd FileType sh,ruby,python                         let b:comment_leader = '#'
+autocmd FileType conf,fstab                             let b:comment_leader = '#'
+autocmd FileType tex                                    let b:comment_leader = '%'
+autocmd FileType mail                                   let b:comment_leader = '>'
+autocmd FileType vim                                    let b:comment_leader = '"'
+autocmd FileType lua                                    let b:comment_leader = '--'
 function! CommentToggle()
     execute ':silent! s/\([^ ]\)/' . escape(b:comment_leader,'\/') . ' \1/'
     execute ':silent! s/^\( *\)' . escape(b:comment_leader,'\/') . ' \?' . escape(b:comment_leader,'\/') . ' \?/\1/'
@@ -188,6 +182,11 @@ let g:startify_session_persistence = 1
 
 " Enable Trouble on g + L
 nmap <silent> gL <cmd>call coc#rpc#request('fillDiagnostics', [bufnr('%')])<CR><cmd>Trouble loclist<CR>`
+
+" Use markdown in VimWiki
+let g:vimwiki_list = [{'path': '~/vimwiki/', 'syntax': 'markdown', 'ext': '.md'}]
+" Don't treat all md files as VimWiki
+let g:vimwiki_global_ext = 0
 
 lua << EOF
 -- Load config

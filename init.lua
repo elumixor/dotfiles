@@ -21,6 +21,7 @@ require("scrollbar").setup({
     },
 })
 
+-- Setup treesitter
 require('treesitter-context').setup()
 
 vim.o.foldtext = [[substitute(getline(v:foldstart),'\\\\t',repeat('\\ ',&tabstop),'g') . ' (' . (v:foldend - v:foldstart + 1) . ' lines)']]
