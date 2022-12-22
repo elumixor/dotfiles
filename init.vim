@@ -97,8 +97,8 @@ set scrolloff=2
 set sidescrolloff=10
 set nowrap
 
-" Set textwidth to 80
-set textwidth=80
+" Set textwidth to 120
+set textwidth=120
 
 " We'll remap Ctrl+u and Ctrl+d to just move the cursor up and down by 20 lines
 nnoremap <C-u> 20k
