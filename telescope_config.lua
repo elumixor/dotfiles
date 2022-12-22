@@ -4,8 +4,11 @@ local builtin = require('telescope.builtin')
 -- Search git files with Telescope on Ctrl+e
 vim.keymap.set('n', '<C-e>', builtin.git_files)
 
--- Search string in files with Ctrl+Shift+F
-vim.keymap.set('n', '<CS-F>', builtin.live_grep)
+-- Search string in files with Ctrl+f
+vim.keymap.set('n', '<C-f>', builtin.live_grep)
+
+-- Search buffers on Ctrl+b
+vim.keymap.set('n', '<C-b>', builtin.buffers)
 
 -- Telescope on <leader>t
 vim.keymap.set('n', '<leader><leader>', "<Cmd>Telescope<CR>")
