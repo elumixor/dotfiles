@@ -18,6 +18,8 @@ Plug 'mhinz/vim-startify'
 
 " NERDTree
 Plug 'preservim/nerdtree'
+" Visual selection in NERDTree
+Plug 'https://github.com/PhilRunninger/nerdtree-visual-selection'
 
 " Git gutter in the NERDTree
 Plug 'Xuyuanp/nerdtree-git-plugin'
@@ -75,7 +77,7 @@ set termguicolors
 set cursorline
 
 " Enable display of whitespaces
-set listchars=space:·
+set listchars=trail:·
 set list
 
 " Transform tabs to spaces with 4 spaces
@@ -113,8 +115,15 @@ nnoremap <silent> <A-f> :NERDTreeFind<CR>
 " Close NERDTree if it's the last window
 autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
 
+" Auto open NERDTree on startup
+autocmd StdinReadPre * let s:std_in=1
+autocmd VimEnter * if argc() == 0 && !exists("s:std_in") | NERDTree | endif
+
 " Use NERD Fonts for the Git Gutter
 let g:NERDTreeGitStatusUseNerdFonts = 1
+let NERDTreeAutoDeleteBuffer = 1
+let NERDTreeMinimalUI = 1
+let NERDTreeDirArrows = 1
 
 " Update Git Gutter more often
 set updatetime=100
@@ -206,5 +215,3 @@ lua << EOF
 -- Load config
 dofile(os.getenv("DOTFILES")..'/init.lua')
 EOF
-
-colorscheme meliora

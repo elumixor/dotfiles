@@ -6,5 +6,10 @@
   "diagnostic.errorSign": "",
   "diagnostic.hintSign": "",
   "diagnostic.infoSign": "",
-  "diagnostic.warningSign": ""
+  "diagnostic.warningSign": "",
+  "cSpell.userWords": [
+    "pixi",
+    "skippable",
+    "webx"
+  ]
 }
