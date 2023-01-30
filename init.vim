@@ -4,7 +4,6 @@ call plug#begin()
 Plug 'github/copilot.vim'
 
 " Color scheme interactive editor which we also need to load the colorscheme
-" start by :LushRunQuickstart
 Plug 'rktjmp/lush.nvim'
 
 " The color scheme we actually use
@@ -18,8 +17,9 @@ Plug 'mhinz/vim-startify'
 
 " NERDTree
 Plug 'preservim/nerdtree'
+
 " Visual selection in NERDTree
-Plug 'https://github.com/PhilRunninger/nerdtree-visual-selection'
+Plug 'PhilRunninger/nerdtree-visual-selection'
 
 " Git gutter in the NERDTree
 Plug 'Xuyuanp/nerdtree-git-plugin'
@@ -28,7 +28,6 @@ Plug 'Xuyuanp/nerdtree-git-plugin'
 Plug 'lewis6991/gitsigns.nvim'
 
 " Trouble - show errors inline
-Plug 'kyazdani42/nvim-web-devicons'
 Plug 'folke/trouble.nvim'
 
 " Git commands made simple by Fugitive
@@ -43,6 +42,9 @@ Plug 'itchyny/lightline.vim'
 " Vim Wiki
 Plug 'vimwiki/vimwiki'
 
+" Highlighting in NERDTree
+Plug 'lambdalisue/glyph-palette.vim'
+
 " Icons for NERDTree
 Plug 'ryanoasis/vim-devicons'
 
@@ -50,6 +52,7 @@ Plug 'ryanoasis/vim-devicons'
 Plug 'nvim-lua/plenary.nvim' " This is required for telescope
 Plug 'nvim-telescope/telescope.nvim', { 'tag': '0.1.0' }
 Plug 'nvim-telescope/telescope-fzf-native.nvim', { 'do': 'make' } " To use fzf syntax in the telescope
+Plug 'fannheyward/telescope-coc.nvim' " To use coc.nvim in the telescope
 
 " Treesitter (for syntax highlighting and folding)
 Plug 'nvim-treesitter/nvim-treesitter'
@@ -60,6 +63,12 @@ Plug 'nvim-treesitter/nvim-treesitter-context'
 
 " Conquer of Completion
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
+
+" Plugin for registers preview
+Plug 'tversteeg/registers.nvim'
+
+" Show leader commands popup
+Plug 'folke/which-key.nvim'
 
 call plug#end()
 
@@ -85,7 +94,7 @@ set tabstop=4
 set shiftwidth=4
 set expandtab
 
-" Insert is unnecesary because the lightline already shows the mode
+" Insert is unnecessary because the lightline already shows the mode
 set noshowmode
 
 " Set signcolumn to always so that the editor doesn't jump
@@ -106,24 +115,15 @@ set textwidth=120
 nnoremap <C-u> 20k
 nnoremap <C-d> 20j
 
+" Change indentation with a single "<" or ">" character
+nnoremap < <<
+nnoremap > >>
+
 " Include custom startify config
 source ~/dotfiles/startify_config.vim
 
-" Switch to NERDTree on Alt+f
-nnoremap <silent> <A-f> :NERDTreeFind<CR>
-
-" Close NERDTree if it's the last window
-autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
-
-" Auto open NERDTree on startup
-autocmd StdinReadPre * let s:std_in=1
-autocmd VimEnter * if argc() == 0 && !exists("s:std_in") | NERDTree | endif
-
-" Use NERD Fonts for the Git Gutter
-let g:NERDTreeGitStatusUseNerdFonts = 1
-let NERDTreeAutoDeleteBuffer = 1
-let NERDTreeMinimalUI = 1
-let NERDTreeDirArrows = 1
+" Include custom NERDTree config
+source ~/dotfiles/nerdtree_config.vim
 
 " Update Git Gutter more often
 set updatetime=100
@@ -176,15 +176,9 @@ vmap <silent> <C-_> :call CommentToggle()<CR>
 nnoremap <silent> <A-q> :q<CR>
 
 " Folding using treesitter
-set foldmethod=expr
+set foldmethod=syntax
 set foldexpr=nvim_treesitter#foldexpr()
-set nofoldenable " Disable folding by default
-
-" Ignore some files in the NERDTree
-let NERDTreeIgnore = ['\.pyc$', '__pycache__']
-
-" Show hidden files
-let NERDTreeShowHidden = 1
+set foldlevelstart=1
 
 " Automatically save sessions
 let g:startify_session_persistence = 1
