@@ -28,7 +28,7 @@ require("scrollbar").setup({
         Warn = {
             text = { "•", "•" },
         },
-        Info ={
+        Info = {
             text = { "•", "•" },
         },
         Hint = {
@@ -42,7 +42,7 @@ require('treesitter-context').setup()
 
 -- Setup which-key
 require('which-key').setup({
-    triggers = { "<leader>", "<C-w>" },
+    triggers = { "<leader>", "<C-w>", "g" },
     triggers_blacklist = { 
         i = { "j", "k", "<C-r>" },
         v = { "j", "k", '"' },

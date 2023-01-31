@@ -8,9 +8,6 @@ vim.keymap.set('n', '<leader>e', builtin.find_files)
 -- Search string in files with <leader>f
 vim.keymap.set('n', '<leader>f', builtin.live_grep)
 
--- Search buffers on Ctrl+b
-vim.keymap.set('n', '<C-b>', builtin.buffers)
-
 -- Add a picker for symbols using command :Telescope coc
 vim.keymap.set('n', '<leader>s', "<cmd>Telescope coc workspace_symbols<cr>")
 
@@ -32,8 +29,9 @@ telescope.setup({
                 ["<C-q>"] = require('telescope.actions').close,
                 -- Close with Esc
                 ["<Esc>"] = require('telescope.actions').close,
+                -- Open in a split with Ctrl+s
+                ["<C-s>"] = require('telescope.actions').select_horizontal,
             },
-            n = { ["q"] = require("telescope.actions").close },
         },
         pickers = {
             buffers = {
