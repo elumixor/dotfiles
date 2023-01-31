@@ -42,10 +42,6 @@ autocmd CursorHold * silent call CocActionAsync('highlight')
 " Rename the symbol on Space+r,n
 nmap <leader>rn <Plug>(coc-rename)
 
-" Formatting selected code.
-xmap <leader>f  <Plug>(coc-format-selected)
-nmap <leader>f  <Plug>(coc-format-selected)
-
 " Format the whole file on Ctrl+Alt+L and return to the place of the cursor.
 nmap <silent> <C-A-l> ggVG<Plug>(coc-format-selected)<C-o>
 

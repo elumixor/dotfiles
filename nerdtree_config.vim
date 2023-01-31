@@ -1,5 +1,5 @@
 " Switch to NERDTree on <Ctrl+f>
-nnoremap <silent> <leader>f :NERDTreeFind<CR>
+nnoremap <silent> <C-f> :NERDTreeFind<CR>
 
 " Close NERDTree if it's the last window
 autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif

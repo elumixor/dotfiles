@@ -42,7 +42,7 @@ require('treesitter-context').setup()
 
 -- Setup which-key
 require('which-key').setup({
-    triggers = { "<leader>" },
+    triggers = { "<leader>", "<C-w>" },
     triggers_blacklist = { 
         i = { "j", "k", "<C-r>" },
         v = { "j", "k", '"' },

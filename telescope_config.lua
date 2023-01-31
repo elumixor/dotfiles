@@ -5,14 +5,17 @@ local builtin = require('telescope.builtin')
 -- vim.keymap.set('n', '<C-e>', builtin.git_files)
 vim.keymap.set('n', '<leader>e', builtin.find_files)
 
--- Search string in files with Ctrl+f
-vim.keymap.set('n', '<C-f>', builtin.live_grep)
+-- Search string in files with <leader>f
+vim.keymap.set('n', '<leader>f', builtin.live_grep)
 
 -- Search buffers on Ctrl+b
 vim.keymap.set('n', '<C-b>', builtin.buffers)
 
 -- Add a picker for symbols using command :Telescope coc
 vim.keymap.set('n', '<leader>s', "<cmd>Telescope coc workspace_symbols<cr>")
+
+-- Add a picker for errors in the project using command :Telescope coc
+vim.keymap.set('n', '<leader>l', "<cmd>Telescope coc workspace_diagnostics<cr>")
 
 -- Telescope on <leader><leader>
 vim.keymap.set('n', '<leader><leader>', "<Cmd>Telescope<CR>")
