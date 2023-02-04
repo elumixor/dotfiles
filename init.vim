@@ -155,6 +155,9 @@ vnoremap <silent> <A-S-k> :m '<-2<CR>gv=gv
 " Clear search selection on Esc
 nnoremap <silent> <CR> :noh<CR><CR>
 
+" leader+p to paste without losing the previous register
+nnoremap <silent> <leader>p "_dP
+
 " Comment code on Ctrl+/ in both normal and visual mode
 autocmd FileType c,cpp,java,scala,javascript,typescript let b:comment_leader = '//'
 autocmd FileType sh,ruby,python                         let b:comment_leader = '#'
@@ -171,9 +174,6 @@ function! CommentToggle()
 endfunction
 map <silent> <C-_> :call CommentToggle()<CR>
 vmap <silent> <C-_> :call CommentToggle()<CR>
-
-" Close the file on Alt+q
-nnoremap <silent> <A-q> :q<CR>
 
 " Folding using treesitter
 set foldmethod=syntax

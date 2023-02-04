@@ -29,6 +29,7 @@ let g:startify_lists = [
 " Custom bookmarks
 let g:startify_bookmarks = [
       \ { 'v': '~/.config/nvim/init.vim' },
+      \ { 't': '~/.tmux.conf' },
       \ { 'z': '~/.zshrc' },
       \ { 'd': '~/dotfiles' },
       \ ]

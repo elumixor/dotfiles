@@ -4,10 +4,11 @@ nmap <silent> ]g <Plug>(coc-diagnostic-next)
 
 " If available, we can use function keys
 nmap <silent> <F3> <Plug>(coc-diagnostic-next)
+nmap <silent> <F2> <Plug>(coc-diagnostic-prev)
 
 
 " Trigger completion on Ctrl+p
-inoremap <silent><expr> <C-p> coc#refresh()
+inoremap <silent><expr> <c-p> coc#refresh()
 
 " Accept completion on Enter and Tab
 inoremap <silent><expr> <CR> coc#pum#visible() ? coc#pum#confirm()
