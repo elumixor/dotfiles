@@ -1,3 +1,6 @@
+# add Go to $PATH
+export PATH=/usr/local/go/bin:$PATH
+
 # >>> conda initialize >>>
 # !! Contents within this block are managed by 'conda init' !!
 __conda_setup="$('/home/elumixor/miniconda3/bin/conda' 'shell.zsh' 'hook' 2> /dev/null)"

@@ -13,10 +13,12 @@
     "dtype",
     "endregion",
     "gsap",
+    "multinomial",
     "ndarray",
     "pixi",
     "skippable",
     "startify",
+    "wandb",
     "webx"
   ]
 }

@@ -70,6 +70,9 @@ Plug 'tversteeg/registers.nvim'
 " Show leader commands popup
 Plug 'folke/which-key.nvim'
 
+" WakaTime
+Plug 'wakatime/vim-wakatime'
+
 call plug#end()
 
 " Remap leader to space
