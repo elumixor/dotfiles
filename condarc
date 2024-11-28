@@ -1,1 +1,6 @@
-changeps1: False
+changeps1: false
+channel_priority: strict
+channels:
+  - nvidia
+  - conda-forge
+  - defaults

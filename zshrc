@@ -75,3 +75,52 @@ bindkey -r '^T'
 
 # Import custom zshrc
 [ -f ~/.zshrc.local ] && source ~/.zshrc.local
+
+# add Go to $PATH
+export PATH=/usr/local/go/bin:$PATH
+
+# >>> conda initialize >>>
+# !! Contents within this block are managed by 'conda init' !!
+__conda_setup="$('/home/elumixor/miniconda3/bin/conda' 'shell.zsh' 'hook' 2> /dev/null)"
+if [ $? -eq 0 ]; then
+    eval "$__conda_setup"
+else
+    if [ -f "/home/elumixor/miniconda3/etc/profile.d/conda.sh" ]; then
+        . "/home/elumixor/miniconda3/etc/profile.d/conda.sh"
+    else
+        export PATH="/home/elumixor/miniconda3/bin:$PATH"
+    fi
+fi
+unset __conda_setup
+
+if [ -f "/home/elumixor/miniconda3/etc/profile.d/mamba.sh" ]; then
+    . "/home/elumixor/miniconda3/etc/profile.d/mamba.sh"
+fi
+# <<< conda initialize <<<
+
+
+# >>> mamba initialize >>>
+# !! Contents within this block are managed by 'mamba init' !!
+export MAMBA_EXE='/home/elumixor/.local/bin/micromamba';
+export MAMBA_ROOT_PREFIX='/home/elumixor/micromamba';
+__mamba_setup="$("$MAMBA_EXE" shell hook --shell zsh --root-prefix "$MAMBA_ROOT_PREFIX" 2> /dev/null)"
+if [ $? -eq 0 ]; then
+    eval "$__mamba_setup"
+else
+    alias micromamba="$MAMBA_EXE"  # Fallback on help from mamba activate
+fi
+unset __mamba_setup
+# <<< mamba initialize <<<
+
+
+# bun completions
+[ -s "/home/elumixor/.bun/_bun" ] && source "/home/elumixor/.bun/_bun"
+
+# bun
+export BUN_INSTALL="$HOME/.bun"
+export PATH="$BUN_INSTALL/bin:$PATH"
+
+eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
+
+# Load Angular CLI autocompletion.
+source <(ng completion script)
