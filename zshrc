@@ -4,15 +4,12 @@ export ZSH="$HOME/.oh-my-zsh"
 # Add .local/bin to path
 export PATH=$PATH:$HOME/.local/bin
 
-# Set the dotfiles variable
-export DOTFILES=$HOME/dotfiles
+# Resolve the dotfiles location from this file's real path (follows the symlink)
+export DOTFILES="${DOTFILES:-${${(%):-%x}:A:h}}"
 
 # We need this to properly display UTF-8 symbols
-export LC_ALL=en_IN.UTF-8
-export LANG=en_IN.UTF-8
-
-# We need this for X11 forwarding
-export DISPLAY=$(hostname).local:0
+export LC_ALL=en_US.UTF-8
+export LANG=en_US.UTF-8
 
 # We need this for 24bit colors, as well as italics
 export TERM="xterm-256color"
@@ -73,54 +70,19 @@ bindkey -M vicmd '^E' fzf-file-widget
 bindkey -M viins '^E' fzf-file-widget
 bindkey -r '^T'
 
-# Import custom zshrc
-[ -f ~/.zshrc.local ] && source ~/.zshrc.local
-
-# add Go to $PATH
-export PATH=/usr/local/go/bin:$PATH
-
-# >>> conda initialize >>>
-# !! Contents within this block are managed by 'conda init' !!
-__conda_setup="$('/home/elumixor/miniconda3/bin/conda' 'shell.zsh' 'hook' 2> /dev/null)"
-if [ $? -eq 0 ]; then
-    eval "$__conda_setup"
-else
-    if [ -f "/home/elumixor/miniconda3/etc/profile.d/conda.sh" ]; then
-        . "/home/elumixor/miniconda3/etc/profile.d/conda.sh"
-    else
-        export PATH="/home/elumixor/miniconda3/bin:$PATH"
-    fi
-fi
-unset __conda_setup
-
-if [ -f "/home/elumixor/miniconda3/etc/profile.d/mamba.sh" ]; then
-    . "/home/elumixor/miniconda3/etc/profile.d/mamba.sh"
-fi
-# <<< conda initialize <<<
-
-
-# >>> mamba initialize >>>
-# !! Contents within this block are managed by 'mamba init' !!
-export MAMBA_EXE='/home/elumixor/.local/bin/micromamba';
-export MAMBA_ROOT_PREFIX='/home/elumixor/micromamba';
-__mamba_setup="$("$MAMBA_EXE" shell hook --shell zsh --root-prefix "$MAMBA_ROOT_PREFIX" 2> /dev/null)"
-if [ $? -eq 0 ]; then
-    eval "$__mamba_setup"
-else
-    alias micromamba="$MAMBA_EXE"  # Fallback on help from mamba activate
-fi
-unset __mamba_setup
-# <<< mamba initialize <<<
-
-
-# bun completions
-[ -s "/home/elumixor/.bun/_bun" ] && source "/home/elumixor/.bun/_bun"
+# Homebrew (macOS arm64 / Intel / Linuxbrew) — pick whichever exists
+for _brew in /opt/homebrew/bin/brew /usr/local/bin/brew /home/linuxbrew/.linuxbrew/bin/brew; do
+  [ -x "$_brew" ] && { eval "$("$_brew" shellenv)"; break; }
+done
+unset _brew
 
 # bun
 export BUN_INSTALL="$HOME/.bun"
-export PATH="$BUN_INSTALL/bin:$PATH"
+[ -d "$BUN_INSTALL/bin" ] && export PATH="$BUN_INSTALL/bin:$PATH"
+[ -s "$BUN_INSTALL/_bun" ] && source "$BUN_INSTALL/_bun"   # completions
 
-eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
+# Go
+[ -d /usr/local/go/bin ] && export PATH=/usr/local/go/bin:$PATH
 
-# Load Angular CLI autocompletion.
-source <(ng completion script)
+# Import machine-specific config (not tracked in the repo)
+[ -f ~/.zshrc.local ] && source ~/.zshrc.local

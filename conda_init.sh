@@ -1,18 +1,11 @@
-# add Go to $PATH
-export PATH=/usr/local/go/bin:$PATH
+# Portable conda/mamba init. Discovers the install location instead of
+# hardcoding a path, so it works across machines. No-op if conda isn't present.
 
-# >>> conda initialize >>>
-# !! Contents within this block are managed by 'conda init' !!
-__conda_setup="$('/home/elumixor/miniconda3/bin/conda' 'shell.zsh' 'hook' 2> /dev/null)"
-if [ $? -eq 0 ]; then
-    eval "$__conda_setup"
-else
-    if [ -f "/home/elumixor/miniconda3/etc/profile.d/conda.sh" ]; then
-        . "/home/elumixor/miniconda3/etc/profile.d/conda.sh"
-    else
-        export PATH="/home/elumixor/miniconda3/bin:$PATH"
-    fi
-fi
-unset __conda_setup
-# <<< conda initialize <<<
-
+for _conda_root in "$HOME/miniconda3" "$HOME/anaconda3" "$HOME/miniforge3" "/opt/homebrew/Caskroom/miniconda/base" "/opt/conda"; do
+  if [ -f "$_conda_root/etc/profile.d/conda.sh" ]; then
+    . "$_conda_root/etc/profile.d/conda.sh"
+    [ -f "$_conda_root/etc/profile.d/mamba.sh" ] && . "$_conda_root/etc/profile.d/mamba.sh"
+    break
+  fi
+done
+unset _conda_root

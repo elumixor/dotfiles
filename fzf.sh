@@ -22,7 +22,12 @@ fd_git() {
     # If we're not in a git repo, just do nothing
 }
 
-[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+# Key bindings + completion: git install drops ~/.fzf.zsh; brew exposes `fzf --zsh`
+if [ -f ~/.fzf.zsh ]; then
+    source ~/.fzf.zsh
+elif command -v fzf >/dev/null 2>&1; then
+    source <(fzf --zsh) 2>/dev/null || true
+fi
 
 # FZF git modified and untracked files on Ctrl+G
 zle -N fd_git{,}

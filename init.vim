@@ -120,10 +120,10 @@ nnoremap < <<
 nnoremap > >>
 
 " Include custom startify config
-source ~/dotfiles/startify_config.vim
+execute "source " . expand("$DOTFILES") . "/startify_config.vim"
 
 " Include custom NERDTree config
-source ~/dotfiles/nerdtree_config.vim
+execute "source " . expand("$DOTFILES") . "/nerdtree_config.vim"
 
 " Update Git Gutter more often
 set updatetime=100
@@ -139,10 +139,10 @@ nnoremap <silent> <A-s> :GitGutterStageHunk<CR>
 nnoremap <silent> <A-g> :G<CR>
 
 " Include custom coc settings
-source ~/dotfiles/coc_settings.vim
+execute "source " . expand("$DOTFILES") . "/coc_settings.vim"
 
 " Include custom lightline config
-source ~/dotfiles/lightline_config.vim
+execute "source " . expand("$DOTFILES") . "/lightline_config.vim"
 
 " Move line up and down with Alt+Shift+j/k
 nnoremap <silent> <A-S-j> :m .+1<CR>==
