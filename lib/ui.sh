@@ -37,8 +37,8 @@ checkbox_menu() {
   _draw
   while true; do
     IFS= read -rsn1 key </dev/tty || break
-    if [ "$key" = $'\033' ]; then           # arrow escape sequence
-      read -rsn2 -t 0.01 key </dev/tty
+    if [ "$key" = $'\033' ]; then           # arrow escape sequence: ESC [ A/B
+      read -rsn2 key </dev/tty               # (no fractional -t: unsupported on bash 3.2)
       case "$key" in
         '[A') key=k ;; '[B') key=j ;;
       esac
