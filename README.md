@@ -23,6 +23,7 @@ the wizard. You get a checkbox menu:
   ◉ tmux + plugins
   ◉ Neovim config
   ◉ Node.js + Bun           (installed)
+  ◉ VS Code (code CLI)      (installed)
   ◉ Claude Code             (installed)
   ○ Miniconda (Python)
 ```
@@ -56,6 +57,19 @@ Or, after cloning:
 
 Env overrides: `DOTFILES_DIR` (clone target, default `~/.dotfiles`),
 `DOTFILES_REPO` (source repo).
+
+## Managing after install
+
+A `dotfiles` command is available in the shell:
+
+```sh
+dotfiles update   # pull latest (configs are symlinked, so they update in place)
+dotfiles setup    # re-run the wizard (pass flags, e.g. `dotfiles setup --all`)
+dotfiles edit     # open the repo in $EDITOR
+dotfiles cd       # cd into the repo
+```
+
+Re-running the install curl does the same as `dotfiles update` + the wizard.
 
 ## Layout
 

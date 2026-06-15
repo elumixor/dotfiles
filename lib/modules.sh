@@ -8,7 +8,7 @@
 # MODULES lists the keys in display order.
 # $DOTFILES is the repo root, exported by setup.sh.
 
-MODULES=(shell starship fzf tools tmux neovim node claude conda)
+MODULES=(shell starship fzf tools tmux neovim node vscode claude conda)
 
 # ---- shell: zsh + oh-my-zsh + plugins + zshrc/aliases -------------------
 mod_shell_label="Zsh shell + Oh My Zsh"
@@ -97,6 +97,37 @@ mod_node_run() {
   have node || pkg_install node
   have bun  || { [ "$PKG" = brew ] && brew install oven-sh/bun/bun || \
     curl -fsSL https://bun.sh/install | bash; }
+}
+
+# ---- VS Code (the `c`/`code` aliases) -----------------------------------
+mod_vscode_label="VS Code (code CLI)"
+mod_vscode_desc="discover/install VS Code and put 'code' on PATH"
+mod_vscode_detect() { have code; }   # a real `code` binary on PATH (aliases aren't visible here)
+mod_vscode_run() {
+  # Already a real binary on PATH? done.
+  if have code; then ok "code already on PATH"; return 0; fi
+  # Discover an installed app bundle and link its CLI into ~/.local/bin.
+  local p
+  for p in \
+    "/Applications/Visual Studio Code.app/Contents/Resources/app/bin/code" \
+    "$HOME/Applications/Visual Studio Code.app/Contents/Resources/app/bin/code" \
+    "/usr/share/code/bin/code" "/snap/bin/code"; do
+    if [ -x "$p" ]; then
+      mkdir -p "$HOME/.local/bin"
+      ln -sf "$p" "$HOME/.local/bin/code"
+      ok "linked code -> $p"
+      return 0
+    fi
+  done
+  # Not installed — install it.
+  info "VS Code not found; installing…"
+  case "$PKG" in
+    brew) brew install --cask visual-studio-code ;;
+    apt)  if have snap; then sudo snap install code --classic
+          else warn "Install VS Code from https://code.visualstudio.com/download"; fi ;;
+    *)    warn "Install VS Code from https://code.visualstudio.com/download" ;;
+  esac
+  have code && ok "code installed" || warn "open VS Code → Cmd+Shift+P → 'Shell Command: Install code command in PATH'"
 }
 
 # ---- claude code ---------------------------------------------------------
