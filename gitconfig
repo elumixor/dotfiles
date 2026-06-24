@@ -1,0 +1,14 @@
+# Tracked git config. Machine/identity-specific settings (user name + email,
+# credentials, signing keys) live in ~/.gitconfig.local, which is NOT tracked.
+[include]
+    path = ~/.gitconfig.local
+
+[alias]
+    # gpa (shell alias) -> git patch: stage everything, amend the last commit, force-push.
+    patch = "!git add . && git commit --amend --no-edit && git push -f -u origin HEAD"
+
+[filter "lfs"]
+	clean = git-lfs clean -- %f
+	smudge = git-lfs smudge -- %f
+	process = git-lfs filter-process
+	required = true

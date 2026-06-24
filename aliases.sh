@@ -9,6 +9,7 @@ alias cl='claude --dangerously-skip-permissions'   # bypass all permission check
 
 # Git
 alias glog="git log --graph --branches --remotes --tags --pretty --format=format:'%C(normal ul)%s%C(reset) %C(auto)%d%C(reset) %n%C(dim white)%an | %C(reset)%C(dim cyan italic)%h%C(reset) | %C(dim yellow)%cr%C(reset) %n'"
+alias gpa="git patch"                          # amend-all + force-push (the `patch` alias lives in gitconfig)
 
 # JS / package scripts (bun)
 alias nrd="bun run dev"

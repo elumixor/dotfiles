@@ -8,7 +8,7 @@
 # MODULES lists the keys in display order.
 # $DOTFILES is the repo root, exported by setup.sh.
 
-MODULES=(shell starship fzf tools tmux neovim node vscode claude conda)
+MODULES=(shell git starship fzf tools tmux neovim node vscode claude conda)
 
 # ---- shell: zsh + oh-my-zsh + plugins + zshrc/aliases -------------------
 mod_shell_label="Zsh shell + Oh My Zsh"
@@ -33,6 +33,15 @@ mod_shell_run() {
     grep -q "$zsh_path" /etc/shells 2>/dev/null || echo "$zsh_path" | sudo tee -a /etc/shells >/dev/null 2>&1 || true
     confirm "Set zsh as your default login shell?" && chsh -s "$zsh_path" || true
   fi
+}
+
+# ---- git: aliases + lfs (identity stays in ~/.gitconfig.local) ----------
+mod_git_label="Git config"
+mod_git_desc="git aliases (patch) + lfs filters; identity stays in ~/.gitconfig.local"
+mod_git_detect() { have git; }
+mod_git_run() {
+  have git || pkg_install git
+  link_file "$DOTFILES/gitconfig" "$HOME/.gitconfig"
 }
 
 # ---- starship prompt -----------------------------------------------------
