@@ -86,3 +86,6 @@ export BUN_INSTALL="$HOME/.bun"
 
 # Import machine-specific config (not tracked in the repo)
 [ -f ~/.zshrc.local ] && source ~/.zshrc.local
+
+# Rust via rustup (shadows Homebrew rust)
+export PATH="/opt/homebrew/opt/rustup/bin:$HOME/.cargo/bin:$PATH"
