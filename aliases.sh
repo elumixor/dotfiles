@@ -2,7 +2,10 @@
 alias vim=nvim
 alias vi=nvim
 alias :q=exit
-alias c=code                                   # VS Code (the `vscode` module puts `code` on PATH)
+alias c='/Applications/Zed.app/Contents/MacOS/cli'   # Zed editor
+alias z='/Applications/Zed.app/Contents/MacOS/cli'
+alias code='/Applications/Zed.app/Contents/MacOS/cli'
+alias zed='/Applications/Zed.app/Contents/MacOS/cli'
 
 # Claude Code
 alias cl='claude --dangerously-skip-permissions'   # bypass all permission checks
@@ -13,6 +16,9 @@ alias gpa="git patch"                          # amend-all + force-push (the `pa
 
 # JS / package scripts (bun)
 alias nrd="bun run dev"
+alias nrdo="bun run dev:open"
+alias nri="bun run install"
+alias nre="bun run deploy"
 alias nrb="bun run build"
 alias nrl="bun run lint"
 alias nrel="bun run eslint"
