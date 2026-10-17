@@ -144,8 +144,12 @@ mod_claude_label="Claude Code"
 mod_claude_desc="Anthropic's CLI coding agent"
 mod_claude_detect() { have claude; }
 mod_claude_run() {
-  have claude && { ok "claude already installed"; return 0; }
-  curl -fsSL https://claude.ai/install.sh | bash
+  if have claude; then
+    info "updating claude to latest"
+    claude update || curl -fsSL https://claude.ai/install.sh | bash
+  else
+    curl -fsSL https://claude.ai/install.sh | bash
+  fi
 }
 
 # ---- conda (off by default) ---------------------------------------------
