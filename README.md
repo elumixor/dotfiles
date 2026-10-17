@@ -22,6 +22,7 @@ the wizard. You get a checkbox menu:
   ◉ CLI tools (bat, fd, ripgrep)
   ◉ tmux + plugins
   ◉ Neovim config
+  ◉ GitHub CLI (gh)
   ◉ Node.js + Bun           (installed)
   ◉ VS Code (code CLI)      (installed)
   ◉ Claude Code             (installed)

@@ -8,7 +8,7 @@
 # MODULES lists the keys in display order.
 # $DOTFILES is the repo root, exported by setup.sh.
 
-MODULES=(shell git starship fzf tools tmux neovim node vscode claude conda)
+MODULES=(shell git gh starship fzf tools tmux neovim node vscode claude conda)
 
 # ---- shell: zsh + oh-my-zsh + plugins + zshrc/aliases -------------------
 mod_shell_label="Zsh shell + Oh My Zsh"
@@ -42,6 +42,25 @@ mod_git_detect() { have git; }
 mod_git_run() {
   have git || pkg_install git
   link_file "$DOTFILES/gitconfig" "$HOME/.gitconfig"
+}
+
+# ---- GitHub CLI ------------------------------------------------------------
+mod_gh_label="GitHub CLI (gh)"
+mod_gh_desc="gh for PRs, issues, auth"
+mod_gh_detect() { have gh; }
+mod_gh_run() {
+  have gh && { ok "gh already installed"; return 0; }
+  if [ "$PKG" = apt ]; then
+    sudo mkdir -p -m 755 /etc/apt/keyrings
+    curl -fsSL https://cli.github.com/packages/githubcli-archive-keyring.gpg \
+      | sudo tee /etc/apt/keyrings/githubcli-archive-keyring.gpg >/dev/null
+    sudo chmod go+r /etc/apt/keyrings/githubcli-archive-keyring.gpg
+    echo "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/githubcli-archive-keyring.gpg] https://cli.github.com/packages stable main" \
+      | sudo tee /etc/apt/sources.list.d/github-cli.list >/dev/null
+    sudo apt-get update
+  fi
+  pkg_install gh
+  warn "run 'gh auth login' to authenticate"
 }
 
 # ---- starship prompt -----------------------------------------------------
