@@ -40,7 +40,16 @@ alias '??'='gh copilot suggest'
 dotfiles() {
   local d="${DOTFILES:-$HOME/.dotfiles}"
   case "${1:-}" in
-    update|up|pull) git -C "$d" pull --ff-only ;;
+    update|up|pull)
+      # Installers append to ~/.zshrc (a symlink into the repo). Move those
+      # lines to ~/.zshrc.local so the pull is clean.
+      if ! git -C "$d" diff --quiet -- zshrc; then
+        { printf '\n# moved from zshrc by dotfiles update (%s)\n' "$(date +%F)"
+          git -C "$d" diff -- zshrc | grep '^+[^+]' | sed 's/^+//'; } >> "$HOME/.zshrc.local"
+        git -C "$d" checkout -- zshrc
+        echo "moved local zshrc additions to ~/.zshrc.local"
+      fi
+      git -C "$d" pull --ff-only ;;
     setup|wizard)   "$d/setup.sh" "${@:2}" ;;
     edit|code)      "${EDITOR:-nvim}" "$d" ;;
     cd)             cd "$d" || return 1 ;;
