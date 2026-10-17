@@ -34,10 +34,21 @@ ensure_pkg() {
   if [ -n "$PKG" ]; then return 0; fi
   if [ "$OS" = "macos" ]; then
     info "Installing Homebrew (no package manager found)…"
-    NONINTERACTIVE=1 /bin/bash -c \
-      "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
-    # shellcheck disable=SC2016
-    eval "$(/opt/homebrew/bin/brew shellenv 2>/dev/null || /usr/local/bin/brew shellenv)"
+    # stdin may be a pipe (curl | bash); Homebrew needs a tty for sudo.
+    if [ -r /dev/tty ]; then
+      /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)" </dev/tty
+    else
+      NONINTERACTIVE=1 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+    fi
+    local b
+    for b in /opt/homebrew/bin/brew /usr/local/bin/brew; do
+      [ -x "$b" ] && { eval "$("$b" shellenv)"; break; }
+    done
+    if ! command -v brew >/dev/null 2>&1; then
+      err "Homebrew install failed. Install it manually, then re-run:"
+      err '  /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"'
+      return 1
+    fi
     PKG="brew"
   else
     err "No supported package manager (brew/apt) found."
