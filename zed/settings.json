@@ -1,0 +1,144 @@
+// Zed settings
+//
+// For information on how to configure Zed, see the Zed
+// documentation: https://zed.dev/docs/configuring-zed
+//
+// To see all of Zed's default settings without changing your
+// custom settings, run `zed: open default settings` from the
+// command palette (cmd-shift-p / ctrl-shift-p)
+{
+  "auto_install_extensions": {
+    "material-icon-theme": true
+  },
+  "soft_wrap": "editor_width",
+  "icon_theme": "Material Icon Theme",
+  "vim": {
+    "toggle_relative_line_numbers": true
+  },
+  "toolbar": {
+    "code_actions": false,
+    "quick_actions": true,
+    "breadcrumbs": true
+  },
+  "buffer_line_height": "comfortable",
+  "buffer_font_weight": 400.0,
+  "git_panel": {
+    "show_count_badge": false,
+    "diff_stats": true,
+    "folder_icons": false,
+    "file_icons": true,
+    "tree_view": true,
+    "status_style": "label_color",
+    "dock": "left"
+  },
+  "outline_panel": {
+    "button": false
+  },
+  "agent": {
+    "terminal_init_command": "cl",
+    "play_sound_when_agent_done": "always",
+    "sidebar_side": "right",
+    "dock": "right",
+    "flexible": true,
+    "default_model": {
+      "provider": "copilot_chat",
+      "model": "claude-sonnet-5",
+      "enable_thinking": true,
+      "effort": "high"
+    },
+    "favorite_models": [],
+    "model_parameters": []
+  },
+  "project_panel": {
+    "hide_hidden": false,
+    "hide_root": true,
+    "indent_guides": {
+      "show": "never"
+    },
+    "git_status_indicator": true,
+    "diagnostic_badges": true,
+    "scrollbar": {
+      "horizontal_scroll": true
+    },
+    "bold_folder_labels": true,
+    "indent_size": 20.0,
+    "git_status": true,
+    "folder_icons": false,
+    "file_icons": true,
+    "entry_spacing": "comfortable",
+    "dock": "left"
+  },
+  "cli_default_open_behavior": "existing_window",
+  "edit_predictions": {
+    "provider": "copilot"
+  },
+  "agent_servers": {
+    "claude-acp": {
+      "default_config_options": {
+        "mode": "bypassPermissions",
+        "fast": "off"
+      },
+      "type": "registry"
+    }
+  },
+  "session": {
+    "trust_all_worktrees": true
+  },
+  "vim_mode": true,
+  "terminal": {
+    "show_count_badge": false,
+    "flexible": true,
+    "font_size": 12.5
+  },
+  "base_keymap": "VSCode",
+  "preview_tabs": {
+    "enabled": false
+  },
+  "tab_bar": {
+    "show": false
+  },
+  "tabs": {
+    "file_icons": false,
+    "show_close_button": "hidden"
+  },
+  "use_smartcase_search": true,
+  "relative_line_numbers": "enabled",
+  "gutter": {
+    "breakpoints": true,
+    "line_numbers": true
+  },
+  "minimap": {
+    "show": "never",
+    "thumb": "always"
+  },
+  "hover_popover_delay": 500,
+  "cursor_blink": true,
+  "use_system_path_prompts": false,
+  "autosave": "on_focus_change",
+  "buffer_font_family": "JetBrainsMono NFM",
+  "file_types": {
+    "xml": [
+      "*.world"
+    ],
+    "yaml": [
+      "*.config"
+    ],
+    "submit_file": [
+      "*.sub"
+    ]
+  },
+  "linked_edits": true,
+  "use_on_type_format": false,
+  "show_whitespaces": "trailing",
+  "show_edit_predictions": true,
+  "wrap_guides": [],
+  "preferred_line_length": 120,
+  "ui_font_size": 16.0,
+  "buffer_font_size": 13.0,
+  "theme": "One Dark",
+  "file_scan_inclusions": [".env", ".env.*"],
+  "file_scan_exclusions": [
+    "**/.git", "**/.svn", "**/.hg", "**/.jj", "**/CVS", "**/.DS_Store", "**/Thumbs.db", "**/.classpath", "**/.settings",
+    "**/node_modules", "**/target", "**/gen", "**/DerivedData", "**/.svelte-kit", "**/.output", "**/.nitro", "**/.vercel", "**/build", "**/dist"
+  ],
+}

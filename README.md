@@ -25,6 +25,7 @@ the wizard. You get a checkbox menu:
   ◉ GitHub CLI (gh)
   ◉ Node.js + Bun           (installed)
   ◉ VS Code (code CLI)      (installed)
+  ◉ Zed editor              (installed)
   ◉ Claude Code             (installed)
   ○ Miniconda (Python)
 ```
@@ -83,6 +84,7 @@ Re-running the install curl does the same as `dotfiles update` + the wizard.
 | `lib/modules.sh` | one block per module: label, detect, install + link |
 | `zshrc`, `aliases.sh`, `fzf.sh`, `conda_init.sh` | shell config |
 | `init.vim`, `*_config.vim`, `*.lua`, `coc-settings.json` | neovim config |
+| `zed/settings.json`, `zed/keymap.json` | Zed editor config |
 | `tmux.conf`, `starship.toml`, `condarc` | misc tool config |
 
 Machine-specific shell settings go in `~/.zshrc.local` (sourced, not tracked).

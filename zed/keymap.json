@@ -1,0 +1,68 @@
+// Zed keymap
+// Docs: https://zed.dev/docs/key-bindings
+[
+  // Terminal splits + focus movement
+  {
+    "context": "Terminal",
+    "bindings": {
+      "alt-n": "pane::SplitRight",       // new split (side by side). Use pane::SplitDown for stacked
+      "alt-j": "workspace::ActivateNextPane",
+      "alt-k": "workspace::ActivatePreviousPane",
+      "cmd-right": ["terminal::SendKeystroke", "ctrl-e"]   // end of line, not Reveal in Finder
+    }
+  },
+  {
+    "context": "(vim_mode == helix_normal || vim_mode == helix_select) && !menu",
+    "unbind": {
+      "space k": "editor::Hover"
+    }
+  },
+  {
+    "context": "Editor && vim_mode != insert && vim_mode != replace",
+    "bindings": {
+      "space k": "zed::OpenKeymap"
+    }
+  },
+  {
+    "context": "Workspace",
+    "unbind": {
+      "cmd-k cmd-s": "zed::OpenKeymap"
+    }
+  },
+  {
+    "context": "Workspace",
+    "unbind": {
+      "ctrl-r": "projects::OpenRecent"
+    }
+  },
+  {
+    "context": "Editor && vim_mode != insert && vim_mode != replace",
+    "bindings": {
+      "space o": "projects::OpenRecent"
+    }
+  },
+  {
+    "context": "Workspace",
+    "unbind": {
+      "alt-cmd-o": "projects::OpenRecent"
+    }
+  },
+  {
+    "context": "(Editor && vim_mode == normal) || (!Editor && !Terminal)",
+    "bindings": {
+      "space e": "file_finder::Toggle"
+    }
+  },
+  {
+    "context": "!Editor && !Terminal",
+    "unbind": {
+      "space f": "file_finder::Toggle"
+    }
+  },
+  {
+    "context": "(vim_mode == helix_normal || vim_mode == helix_select) && !menu",
+    "unbind": {
+      "space f": "file_finder::Toggle"
+    }
+  }
+]

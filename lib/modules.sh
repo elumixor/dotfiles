@@ -8,7 +8,7 @@
 # MODULES lists the keys in display order.
 # $DOTFILES is the repo root, exported by setup.sh.
 
-MODULES=(shell git gh starship fzf tools tmux neovim node vscode claude conda)
+MODULES=(shell git gh starship fzf tools tmux neovim node vscode zed claude conda)
 
 # ---- shell: zsh + oh-my-zsh + plugins + zshrc/aliases -------------------
 mod_shell_label="Zsh shell + Oh My Zsh"
@@ -156,6 +156,36 @@ mod_vscode_run() {
     *)    warn "Install VS Code from https://code.visualstudio.com/download" ;;
   esac
   have code && ok "code installed" || warn "open VS Code → Cmd+Shift+P → 'Shell Command: Install code command in PATH'"
+}
+
+# ---- zed ------------------------------------------------------------------
+mod_zed_label="Zed editor"
+mod_zed_desc="zed + JetBrainsMono Nerd Font, settings.json, keymap.json"
+mod_zed_detect() { have zed || [ -d "/Applications/Zed.app" ]; }
+mod_zed_run() {
+  if ! mod_zed_detect; then
+    info "Installing Zed…"
+    case "$PKG" in
+      brew) brew install --cask zed ;;
+      *)    curl -f https://zed.dev/install.sh | sh ;;
+    esac
+  fi
+  # Nerd font used by settings.json (buffer_font_family) and starship.
+  if [ "$PKG" = brew ]; then
+    brew list --cask font-jetbrains-mono-nerd-font >/dev/null 2>&1 || brew install --cask font-jetbrains-mono-nerd-font
+  elif [ ! -d "$HOME/.local/share/fonts/JetBrainsMonoNF" ]; then
+    info "Installing JetBrainsMono Nerd Font…"
+    local tmp; tmp="$(mktemp -d)"
+    curl -fsSL -o "$tmp/f.tar.xz" https://github.com/ryanoasis/nerd-fonts/releases/latest/download/JetBrainsMono.tar.xz \
+      && mkdir -p "$HOME/.local/share/fonts/JetBrainsMonoNF" \
+      && tar -xJf "$tmp/f.tar.xz" -C "$HOME/.local/share/fonts/JetBrainsMonoNF" \
+      && { have fc-cache && fc-cache -f >/dev/null; }
+    rm -rf "$tmp"
+  fi
+  link_file "$DOTFILES/zed/settings.json" "$HOME/.config/zed/settings.json"
+  link_file "$DOTFILES/zed/keymap.json"   "$HOME/.config/zed/keymap.json"
+  [ -x /Applications/Zed.app/Contents/MacOS/cli ] && ! have zed && { mkdir -p "$HOME/.local/bin"; ln -sf /Applications/Zed.app/Contents/MacOS/cli "$HOME/.local/bin/zed"; ok "linked zed CLI"; }
+  return 0
 }
 
 # ---- claude code ---------------------------------------------------------
