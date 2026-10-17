@@ -85,6 +85,7 @@ Re-running the install curl does the same as `dotfiles update` + the wizard.
 | `zshrc`, `aliases.sh`, `fzf.sh`, `conda_init.sh` | shell config |
 | `init.vim`, `*_config.vim`, `*.lua`, `coc-settings.json` | neovim config |
 | `zed/settings.json`, `zed/keymap.json` | Zed editor config |
+| `claude/statusline.sh` | Claude Code statusline (linked to `~/.claude/`, registered in settings.json) |
 | `tmux.conf`, `starship.toml`, `condarc` | misc tool config |
 
 Machine-specific shell settings go in `~/.zshrc.local` (sourced, not tracked).

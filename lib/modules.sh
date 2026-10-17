@@ -190,7 +190,7 @@ mod_zed_run() {
 
 # ---- claude code ---------------------------------------------------------
 mod_claude_label="Claude Code"
-mod_claude_desc="Anthropic's CLI coding agent"
+mod_claude_desc="Anthropic's CLI coding agent + custom statusline"
 mod_claude_detect() { have claude; }
 mod_claude_run() {
   if have claude; then
@@ -198,6 +198,17 @@ mod_claude_run() {
     claude update || curl -fsSL https://claude.ai/install.sh | bash
   else
     curl -fsSL https://claude.ai/install.sh | bash
+  fi
+  have jq || pkg_install jq
+  # Statusline: link script, register it in ~/.claude/settings.json (merge, keep other keys).
+  link_file "$DOTFILES/claude/statusline.sh" "$HOME/.claude/statusline.sh"
+  local cfg="$HOME/.claude/settings.json" tmp
+  [ -s "$cfg" ] || printf '{}\n' > "$cfg"
+  tmp="$(mktemp)"
+  if jq '.statusLine = {type: "command", command: "~/.claude/statusline.sh"}' "$cfg" > "$tmp"; then
+    mv "$tmp" "$cfg"; ok "statusLine set in $cfg"
+  else
+    rm -f "$tmp"; warn "could not update $cfg (invalid JSON?)"
   fi
 }
 
