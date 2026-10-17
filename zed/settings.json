@@ -8,7 +8,13 @@
 // command palette (cmd-shift-p / ctrl-shift-p)
 {
   "auto_install_extensions": {
-    "material-icon-theme": true
+    "html": true,
+    "material-icon-theme": true,
+    "svelte": true,
+    "swift": true,
+    "terraform": true,
+    "toml": true,
+    "xml": true
   },
   "soft_wrap": "editor_width",
   "icon_theme": "Material Icon Theme",
