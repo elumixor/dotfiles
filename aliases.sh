@@ -49,7 +49,17 @@ dotfiles() {
         git -C "$d" checkout -- zshrc
         echo "moved local zshrc additions to ~/.zshrc.local"
       fi
-      git -C "$d" pull --ff-only ;;
+      # Other local edits (e.g. Zed rewriting settings.json): stash, pull, reapply.
+      if ! git -C "$d" diff --quiet; then
+        git -C "$d" stash push -q -m "dotfiles update $(date +%F)"
+        git -C "$d" pull --ff-only
+        if ! git -C "$d" stash pop -q; then
+          git -C "$d" checkout -- . && git -C "$d" stash drop -q
+          echo "local edits conflicted with upstream; kept repo version (see: git -C $d stash list)"
+        fi
+      else
+        git -C "$d" pull --ff-only
+      fi ;;
     setup|wizard)   "$d/setup.sh" "${@:2}" ;;
     edit|code)      "${EDITOR:-nvim}" "$d" ;;
     cd)             cd "$d" || return 1 ;;
