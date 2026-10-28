@@ -286,13 +286,17 @@ __chunk_1="$( {
   if [ -z "$__bn" ]; then :
   elif printf '%s' "$__batt" | grep -q '; charging;'; then
     __bt="$(printf '%s' "$__batt" | grep -o '[0-9]*:[0-9][0-9] remaining' | cut -d' ' -f1)"
-    [ -z "$__bt" ] && __bt='...'
+    __bsuf=''
+    if [ -n "$__bt" ]; then
+      __bh="${__bt%%:*}"; __bm="$((10#${__bt##*:}))"
+      if [ "$__bh" -gt 0 ]; then __bsuf=" (${__bh}h${__bm}m)"; else __bsuf=" (${__bm}m)"; fi
+    fi
     __emit '2;33' ' • '
-    __emit '2;92' "bat ${__batt_pct}+ ${__bt} to full"
+    __emit '2;92' "▰ ${__batt_pct}${__bsuf}"
   elif [ "$__bn" -le 30 ] && ! printf '%s' "$__batt" | grep -q 'AC Power'; then
     if [ "$__bn" -le 20 ]; then __bs='1;91'; else __bs='2;33'; fi
     __emit '2;33' ' • '
-    __emit "$__bs" "bat ${__batt_pct}"
+    __emit "$__bs" "▯ ${__batt_pct}"
   fi
 } )"
 __total_len=0
