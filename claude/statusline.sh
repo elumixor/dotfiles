@@ -243,17 +243,17 @@ __chunk_0="$( {
   # Jev routing of this conversation overrides the session model, so show its pick and confidence
   __jev_on=0; [ -s "$__jev" ] && [ "$(cat "$__jev")" != "null" ] && __jev_on=1
   if [ "$__jev_on" = 1 ]; then
-    __emit '1;38;5;63;49' "$(jq -r '.model' "$__jev")"
+    __emit '1;38;5;63;49' " $(jq -r '.model' "$__jev")"
     __emit '' '   '
-    __emit '38;5;172' "$(jq -r '.effort' "$__jev")"
+    __emit '38;5;172' " $(jq -r '.effort' "$__jev")"
   else
-    __emit '1;38;5;63;49' "$__v"
+    __emit '1;38;5;63;49' " $__v"
   fi
   if [ "$__jev_on" = 0 ]; then
   __emit '' '   '
   if [ "$(__field 'thinking.enabled')" = 'true' ]; then
     __v="$(__field 'effort.level')"
-    __emit '38;5;172' "$__v"
+    __emit '38;5;172' " $__v"
   fi
   fi
   __emit '' '   '
