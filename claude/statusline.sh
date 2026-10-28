@@ -282,15 +282,13 @@ __chunk_1="$( {
   __emit '2;33' '%'
   __batt="$(pmset -g batt 2>/dev/null)"
   __batt_pct="$(printf '%s' "$__batt" | grep -o '[0-9]*%' | head -1)"
-  if [ -n "$__batt_pct" ]; then
+  if [ -n "$__batt_pct" ] && ! printf '%s' "$__batt" | grep -q 'AC Power'; then
     __bn="${__batt_pct%\%}"
-    if [ "$__bn" -le 20 ]; then __bs='1;91'
-    elif [ "$__bn" -le 40 ]; then __bs='2;33'
-    else __bs='2;92'; fi
-    __bsuf=''
-    if printf '%s' "$__batt" | grep -q 'AC Power'; then __bsuf='+'; fi
-    __emit '2;33' ' • '
-    __emit "$__bs" "bat ${__batt_pct}${__bsuf}"
+    if [ "$__bn" -le 30 ]; then
+      if [ "$__bn" -le 20 ]; then __bs='1;91'; else __bs='2;33'; fi
+      __emit '2;33' ' • '
+      __emit "$__bs" "bat ${__batt_pct}"
+    fi
   fi
 } )"
 __total_len=0
