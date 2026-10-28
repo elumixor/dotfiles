@@ -244,10 +244,8 @@ __chunk_0="$( {
   __jev_on=0; [ -s "$__jev" ] && [ "$(cat "$__jev")" != "null" ] && __jev_on=1
   if [ "$__jev_on" = 1 ]; then
     __emit '1;38;5;63;49' "$(jq -r '.model' "$__jev")"
-    __emit '2;38;5;63' " $(jq -r '((.confidence.tier // 0) * 100 | round | tostring) + "%"' "$__jev")"
     __emit '' '   '
     __emit '38;5;172' "$(jq -r '.effort' "$__jev")"
-    __emit '2;38;5;172' " $(jq -r '((.confidence.effort // 0) * 100 | round | tostring) + "%"' "$__jev")"
   else
     __emit '1;38;5;63;49' "$__v"
   fi
@@ -259,13 +257,13 @@ __chunk_0="$( {
   fi
   fi
   __emit '' '   '
-  __emit '2;96' 'ctx '
+  __emit '2;96' '◐ '
   __v="$(__field 'context_window.used_percentage')"
   __emit '2;96' "$__v"
   __emit '2;96' '%'
 } )"
 __chunk_1="$( {
-  __emit '2;91' '   session '
+  __emit '2;91' '   ◷ '
   __v="$(__field 'rate_limits.five_hour.used_percentage')"
   __emit '2;91' "${__v}%"
   __emit '2;33' ' / '
@@ -285,11 +283,11 @@ __chunk_1="$( {
   if [ -z "$__bn" ]; then :
   elif printf '%s' "$__batt" | grep -q '; charging;'; then
     __emit '' '   '
-    __emit '2;92' "bat ${__batt_pct}${__bsuf}"
+    __emit '2;92' "▯ ${__batt_pct}${__bsuf}"
   elif [ "$__bn" -le 30 ] && ! printf '%s' "$__batt" | grep -q 'AC Power'; then
     if [ "$__bn" -le 20 ]; then __bs='1;91'; else __bs='2;33'; fi
     __emit '' '   '
-    __emit "$__bs" "bat ${__batt_pct}${__bsuf}"
+    __emit "$__bs" "▯ ${__batt_pct}${__bsuf}"
   fi
 } )"
 printf '%s%s' "$__chunk_0" "$__chunk_1"
