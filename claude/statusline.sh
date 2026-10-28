@@ -239,13 +239,26 @@ __rel_time() {
 }
 __chunk_0="$( {
   __v="$(__field 'model.display_name')"
-  __emit '1;38;5;63;49' "$__v"
+  __jev="$HOME/.config/jev/sessions/$(__field 'session_id').json"
+  # Jev routing of this conversation overrides the session model, so show its pick and confidence
+  __jev_on=0; [ -s "$__jev" ] && [ "$(cat "$__jev")" != "null" ] && __jev_on=1
+  if [ "$__jev_on" = 1 ]; then
+    __emit '1;38;5;63;49' "$(jq -r '.model' "$__jev")"
+    __emit '2;38;5;63' " $(jq -r '((.confidence.tier // 0) * 100 | round | tostring) + "%"' "$__jev")"
+    __emit '' ' • '
+    __emit '38;5;172' "$(jq -r '.effort' "$__jev")"
+    __emit '2;38;5;172' " $(jq -r '((.confidence.effort // 0) * 100 | round | tostring) + "%"' "$__jev")"
+  else
+    __emit '1;38;5;63;49' "$__v"
+  fi
+  if [ "$__jev_on" = 0 ]; then
   __emit '' ' '
   __emit '' '•'
   __emit '38;5;172' ' '
   if [ "$(__field 'thinking.enabled')" = 'true' ]; then
     __v="$(__field 'effort.level')"
     __emit '38;5;172' "$__v"
+  fi
   fi
   __emit '' ' '
   __emit '' '•'
@@ -267,6 +280,14 @@ __chunk_1="$( {
   __v="$(__field 'rate_limits.seven_day.used_percentage')"
   __emit '2;33' "$__v"
   __emit '2;33' '%'
+  __batt="$(pmset -g batt 2>/dev/null)"
+  __batt_pct="$(printf '%s' "$__batt" | grep -o '[0-9]*%' | head -1)"
+  if [ -n "$__batt_pct" ]; then
+    case "$__batt" in
+      (*'AC Power'*) __emit '2;92' " • ⚡""$__batt_pct" ;;
+      (*) __emit '2;92' " • 🔋""$__batt_pct" ;;
+    esac
+  fi
 } )"
 __total_len=0
 __len_0=$(__visible_len "$__chunk_0")
