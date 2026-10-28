@@ -262,59 +262,40 @@ __chunk_0="$( {
   fi
   __emit '' ' '
   __emit '' '•'
-  __emit '2;96' ' '
+  __emit '2;96' ' ctx '
   __v="$(__field 'context_window.used_percentage')"
   __emit '2;96' "$__v"
   __emit '2;96' '%'
 } )"
 __chunk_1="$( {
-  __emit '2;91' ' '
+  __emit '2;91' ' • session '
   __v="$(__field 'rate_limits.five_hour.used_percentage')"
-  __bar_out="$(__bar "$__v" 10 '▰' '▱')"
-  __emit '2;91' "$__bar_out"
-  __emit '2;91' ' '
-  __v="$(__field 'rate_limits.five_hour.used_percentage')"
-  __emit '2;91' "$__v"
-  __emit '2;91' '%'
+  __emit '2;91' "${__v}%"
   __emit '2;33' ' / '
   __v="$(__field 'rate_limits.seven_day.used_percentage')"
-  __emit '2;33' "$__v"
-  __emit '2;33' '%'
+  __emit '2;33' "${__v}%"
   __batt="$(pmset -g batt 2>/dev/null)"
   __batt_pct="$(printf '%s' "$__batt" | grep -o '[0-9]*%' | head -1)"
   __bn="${__batt_pct%\%}"
+  __bt="$(printf '%s' "$__batt" | grep -o '[0-9]*:[0-9][0-9] remaining' | cut -d' ' -f1)"
+  __bsuf=''
+  if [ -n "$__bt" ]; then
+    __bh="${__bt%%:*}"; __bm="$((10#${__bt##*:}))"
+    if [ "$__bh" -gt 0 ]; then
+      __bsuf=" $(awk -v m="$((__bh * 60 + __bm))" 'BEGIN{ x = sprintf("%.1f", m / 60); sub(/\.0$/, "", x); printf "%sh", x }')"
+    else __bsuf=" ${__bm}m"; fi
+  fi
   if [ -z "$__bn" ]; then :
   elif printf '%s' "$__batt" | grep -q '; charging;'; then
-    __bt="$(printf '%s' "$__batt" | grep -o '[0-9]*:[0-9][0-9] remaining' | cut -d' ' -f1)"
-    __bsuf=''
-    if [ -n "$__bt" ]; then
-      __bh="${__bt%%:*}"; __bm="$((10#${__bt##*:}))"
-      if [ "$__bh" -gt 0 ]; then __bsuf=" (${__bh}h${__bm}m)"; else __bsuf=" (${__bm}m)"; fi
-    fi
     __emit '2;33' ' • '
-    __emit '2;92' "▰ ${__batt_pct}${__bsuf}"
+    __emit '2;92' "bat ${__batt_pct}${__bsuf}"
   elif [ "$__bn" -le 30 ] && ! printf '%s' "$__batt" | grep -q 'AC Power'; then
     if [ "$__bn" -le 20 ]; then __bs='1;91'; else __bs='2;33'; fi
     __emit '2;33' ' • '
-    __emit "$__bs" "▯ ${__batt_pct}"
+    __emit "$__bs" "bat ${__batt_pct}${__bsuf}"
   fi
 } )"
-__total_len=0
-__len_0=$(__visible_len "$__chunk_0")
-__total_len=$((__total_len + __len_0))
-__len_1=$(__visible_len "$__chunk_1")
-__total_len=$((__total_len + __len_1))
-__remaining=$((STATUSLINE_COLS - __total_len))
-if [ "$__remaining" -lt 0 ]; then __remaining=0; fi
-__pad_base=$((__remaining / 1))
-__pad_extra=$((__remaining - __pad_base * 1))
-printf '%s' "$__chunk_0"
-if [ 0 -lt "$__pad_extra" ]; then
-  __repeat_char ' ' $((__pad_base + 1))
-else
-  __repeat_char ' ' "$__pad_base"
-fi
-printf '%s' "$__chunk_1"
+printf '%s%s' "$__chunk_0" "$__chunk_1"
 
 exit 0
 
