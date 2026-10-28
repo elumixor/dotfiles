@@ -94,6 +94,7 @@
   "terminal": {
     "show_count_badge": false,
     "flexible": true,
+    "font_fallbacks": ["Symbols Nerd Font Mono"],
     "font_size": 12.5
   },
   "base_keymap": "VSCode",
