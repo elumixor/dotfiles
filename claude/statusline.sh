@@ -256,19 +256,29 @@ __chunk_0="$( {
     __emit '38;5;172' " $__v"
   fi
   fi
-  __emit '' '   '
-  __emit '2;96' ' '
   __v="$(__field 'context_window.used_percentage')"
-  __emit '2;96' "$__v"
-  __emit '2;96' '%'
+  if [ -n "$__v" ]; then
+    __emit '' '   '
+    __emit '2;96' " $__v%"
+  fi
 } )"
 __chunk_1="$( {
   __emit '2;91' '    '
-  __v="$(__field 'rate_limits.five_hour.used_percentage')"
-  __emit '2;91' "${__v}%"
-  __emit '2;33' ' / '
-  __v="$(__field 'rate_limits.seven_day.used_percentage')"
-  __emit '2;33' "${__v}%"
+  __r5="$(__field 'rate_limits.five_hour.used_percentage')"
+  __r7="$(__field 'rate_limits.seven_day.used_percentage')"
+  __rc="$HOME/.claude/state/statusline-rate"
+  if [ -n "$__r5" ]; then
+    mkdir -p "${__rc%/*}" 2>/dev/null; printf '%s %s' "$__r5" "${__r7:-0}" > "$__rc" 2>/dev/null
+  elif [ -s "$__rc" ]; then
+    read -r __r5 __r7 < "$__rc"
+  fi
+  if [ -n "$__r5" ]; then
+    __emit '2;91' "${__r5}%"
+    __emit '2;33' ' / '
+    __emit '2;33' "${__r7}%"
+  else
+    __emit '2;91' '--'
+  fi
   __batt="$(pmset -g batt 2>/dev/null)"
   __batt_pct="$(printf '%s' "$__batt" | grep -o '[0-9]*%' | head -1)"
   __bn="${__batt_pct%\%}"
