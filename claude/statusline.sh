@@ -282,13 +282,17 @@ __chunk_1="$( {
   __emit '2;33' '%'
   __batt="$(pmset -g batt 2>/dev/null)"
   __batt_pct="$(printf '%s' "$__batt" | grep -o '[0-9]*%' | head -1)"
-  if [ -n "$__batt_pct" ] && ! printf '%s' "$__batt" | grep -q 'AC Power'; then
-    __bn="${__batt_pct%\%}"
-    if [ "$__bn" -le 30 ]; then
-      if [ "$__bn" -le 20 ]; then __bs='1;91'; else __bs='2;33'; fi
-      __emit '2;33' ' • '
-      __emit "$__bs" "bat ${__batt_pct}"
-    fi
+  __bn="${__batt_pct%\%}"
+  if [ -z "$__bn" ]; then :
+  elif printf '%s' "$__batt" | grep -q '; charging;'; then
+    __bt="$(printf '%s' "$__batt" | grep -o '[0-9]*:[0-9][0-9] remaining' | cut -d' ' -f1)"
+    [ -z "$__bt" ] && __bt='...'
+    __emit '2;33' ' • '
+    __emit '2;92' "bat ${__batt_pct}+ ${__bt} to full"
+  elif [ "$__bn" -le 30 ] && ! printf '%s' "$__batt" | grep -q 'AC Power'; then
+    if [ "$__bn" -le 20 ]; then __bs='1;91'; else __bs='2;33'; fi
+    __emit '2;33' ' • '
+    __emit "$__bs" "bat ${__batt_pct}"
   fi
 } )"
 __total_len=0
