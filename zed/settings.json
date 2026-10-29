@@ -41,7 +41,7 @@
     "button": false
   },
   "agent": {
-    "terminal_init_command": "cl",
+    "terminal_init_command": "claude",
     "play_sound_when_agent_done": "always",
     "sidebar_side": "right",
     "dock": "right",
