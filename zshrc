@@ -89,3 +89,12 @@ export BUN_INSTALL="$HOME/.bun"
 
 # Rust via rustup (shadows Homebrew rust)
 export PATH="/opt/homebrew/opt/rustup/bin:$HOME/.cargo/bin:$PATH"
+
+# pai channel
+claude() {
+  case "$1" in
+    mcp|plugin|plugins|update|upgrade|doctor|config|install|setup-token|auth|migrate-installer|-p|--print|-v|--version|-h|--help) command claude "$@" ;;
+    *) command claude --settings '{"enabledPlugins":{"pai@pai":true}}' --channels plugin:pai@pai "$@" ;;
+  esac
+}
+# pai channel end

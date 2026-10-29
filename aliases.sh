@@ -8,7 +8,6 @@ alias code='/Applications/Zed.app/Contents/MacOS/cli'
 alias zed='/Applications/Zed.app/Contents/MacOS/cli'
 
 # Claude Code
-alias cl='claude --dangerously-skip-permissions'   # bypass all permission checks
 
 # Git
 alias glog="git log --graph --branches --remotes --tags --pretty --format=format:'%C(normal ul)%s%C(reset) %C(auto)%d%C(reset) %n%C(dim white)%an | %C(reset)%C(dim cyan italic)%h%C(reset) | %C(dim yellow)%cr%C(reset) %n'"
