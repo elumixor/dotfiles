@@ -237,23 +237,35 @@ __rel_time() {
   h=$((diff/3600)); rem=$(((diff%3600)/60))
   printf 'T-%dh%02dm' "$h" "$rem"
 }
+# Cool-to-hot ramp by strength, shared by model and effort (same steps as the jev mod's notices)
+__strength_sgr() {
+  case "$(printf '%s' "$1" | tr '[:upper:]' '[:lower:]')" in
+    *haiku*|low) printf '38;5;114' ;;
+    *sonnet*|medium) printf '38;5;185' ;;
+    *opus*|high) printf '38;5;215' ;;
+    *fable*|xhigh|max) printf '38;5;204' ;;
+    *) printf '38;5;250' ;;
+  esac
+}
 __chunk_0="$( {
   __v="$(__field 'model.display_name')"
   __jev="$HOME/.config/jev/sessions/$(__field 'session_id').json"
-  # Jev routing of this conversation overrides the session model, so show its pick and confidence
+  # Jev routing of this conversation overrides the session model; now = effort of the message in flight
   __jev_on=0; [ -s "$__jev" ] && [ "$(cat "$__jev")" != "null" ] && __jev_on=1
   if [ "$__jev_on" = 1 ]; then
-    __emit '1;38;5;63;49' " $(jq -r '.model' "$__jev")"
+    __m="$(jq -r '.model' "$__jev")"
+    __emit "1;$(__strength_sgr "$__m")" " $__m"
     __emit '' '   '
-    __emit '38;5;172' " $(jq -r '.effort' "$__jev")"
+    __e="$(jq -r '.now // .effort' "$__jev")"
+    __emit "$(__strength_sgr "$__e")" " $__e"
   else
-    __emit '1;38;5;63;49' " $__v"
+    __emit "1;$(__strength_sgr "$__v")" " $__v"
   fi
   if [ "$__jev_on" = 0 ]; then
   __emit '' '   '
   if [ "$(__field 'thinking.enabled')" = 'true' ]; then
     __v="$(__field 'effort.level')"
-    __emit '38;5;172' " $__v"
+    __emit "$(__strength_sgr "$__v")" " $__v"
   fi
   fi
   __v="$(__field 'context_window.used_percentage')"
@@ -266,16 +278,32 @@ __chunk_1="$( {
   __emit '2;91' '    '
   __r5="$(__field 'rate_limits.five_hour.used_percentage')"
   __r7="$(__field 'rate_limits.seven_day.used_percentage')"
+  __rr="$(__field 'rate_limits.five_hour.resets_at')"
+  __rw="$(__field 'rate_limits.seven_day.resets_at')"
   __rc="$HOME/.claude/state/statusline-rate"
   if [ -n "$__r5" ]; then
-    mkdir -p "${__rc%/*}" 2>/dev/null; printf '%s %s' "$__r5" "${__r7:-0}" > "$__rc" 2>/dev/null
+    mkdir -p "${__rc%/*}" 2>/dev/null; printf '%s %s %s %s' "$__r5" "${__r7:-0}" "${__rr:-0}" "${__rw:-0}" > "$__rc" 2>/dev/null
   elif [ -s "$__rc" ]; then
-    read -r __r5 __r7 < "$__rc"
+    read -r __r5 __r7 __rr __rw < "$__rc"
   fi
+  # Single-unit time until reset: 30m, 1.4h, 2.5d
+  __reset_in() {
+    local d=$(( ${1:-0} - $(__tick) ))
+    [ "$d" -gt 0 ] || return 0
+    if [ "$d" -ge 86400 ]; then awk -v s="$d" 'BEGIN{ x = sprintf("%.1f", s / 86400); sub(/\.0$/, "", x); printf "%sd", x }'
+    elif [ "$d" -ge 3600 ]; then awk -v s="$d" 'BEGIN{ x = sprintf("%.1f", s / 3600); sub(/\.0$/, "", x); printf "%sh", x }'
+    else printf '%dm' $(( (d + 59) / 60 )); fi
+  }
   if [ -n "$__r5" ]; then
     __emit '2;91' "${__r5}%"
+    if [ "$(__norm_int "$__r5")" -gt 50 ]; then
+      __rt="$(__reset_in "$__rr")"; [ -n "$__rt" ] && __emit '2;91' " $__rt"
+    fi
     __emit '2;33' ' / '
     __emit '2;33' "${__r7}%"
+    if [ "$(__norm_int "$__r7")" -gt 50 ]; then
+      __rt="$(__reset_in "$__rw")"; [ -n "$__rt" ] && __emit '2;33' " $__rt"
+    fi
   else
     __emit '2;91' '--'
   fi
