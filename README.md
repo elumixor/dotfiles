@@ -65,7 +65,7 @@ Env overrides: `DOTFILES_DIR` (clone target, default `~/.dotfiles`),
 A `dotfiles` command is available in the shell:
 
 ```sh
-dotfiles update   # pull latest (configs are symlinked, so they update in place)
+dotfiles update   # pull latest + refresh Zed/Claude (fonts, configs, statusline)
 dotfiles setup    # re-run the wizard (pass flags, e.g. `dotfiles setup --all`)
 dotfiles edit     # open the repo in $EDITOR
 dotfiles cd       # cd into the repo

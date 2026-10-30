@@ -30,7 +30,7 @@ alias m=micromamba
 alias '??'='gh copilot suggest'
 
 # Manage these dotfiles from anywhere
-#   dotfiles update   pull latest (configs are symlinked, so they update in place)
+#   dotfiles update   pull latest + refresh Zed/Claude (fonts, configs)
 #   dotfiles setup    re-run the install wizard (pass flags, e.g. --all)
 #   dotfiles edit     open the repo in $EDITOR
 #   dotfiles cd       cd into the repo
@@ -56,7 +56,8 @@ dotfiles() {
         fi
       else
         git -C "$d" pull --ff-only
-      fi ;;
+      fi
+      "$d/setup.sh" --installed zed claude ;;
     setup|wizard)   "$d/setup.sh" "${@:2}" ;;
     edit|code)      "${EDITOR:-nvim}" "$d" ;;
     cd)             cd "$d" || return 1 ;;

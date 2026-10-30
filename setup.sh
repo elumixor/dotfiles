@@ -6,6 +6,7 @@
 #   ./setup.sh --all           install everything (no prompts)
 #   ./setup.sh --yes           accept the auto-detected defaults (no prompts)
 #   ./setup.sh shell nvim ...  only the named modules (no prompts)
+#   ./setup.sh --installed zed claude  named modules, only those already installed
 #   ./setup.sh --list          list module keys and exit
 set -euo pipefail
 
@@ -20,14 +21,16 @@ export DOTFILES
 . "$DOTFILES/lib/modules.sh"
 
 # ---- parse args ----------------------------------------------------------
+ONLY_INSTALLED=0
 MODE="wizard"        # wizard | yes | all | explicit
 EXPLICIT=()
 for a in "$@"; do
   case "$a" in
     --all)  MODE="all" ;;
     --yes|-y) MODE="yes" ;;
+    --installed) ONLY_INSTALLED=1 ;;
     --list) printf '%s\n' "${MODULES[@]}"; exit 0 ;;
-    -h|--help) sed -n '2,10p' "$0" | sed 's/^# \{0,1\}//'; exit 0 ;;
+    -h|--help) sed -n '2,11p' "$0" | sed 's/^# \{0,1\}//'; exit 0 ;;
     -*) err "unknown flag: $a"; exit 2 ;;
     *)  MODE="explicit"; EXPLICIT+=("$a") ;;
   esac
@@ -57,6 +60,7 @@ case "$MODE" in
   yes)      SELECTED=("${CB_STATE[@]}") ;;
   explicit) SELECTED=(); for key in "${MODULES[@]}"; do
               hit=0; for e in "${EXPLICIT[@]}"; do [ "$e" = "$key" ] && hit=1; done
+              [ "$ONLY_INSTALLED" = 1 ] && ! "mod_${key}_detect" >/dev/null 2>&1 && hit=0
               SELECTED+=("$hit"); done ;;
   wizard)   checkbox_menu "Select what to install / configure:" ;;
 esac

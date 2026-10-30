@@ -170,18 +170,7 @@ mod_zed_run() {
       *)    curl -f https://zed.dev/install.sh | sh ;;
     esac
   fi
-  # Nerd font used by settings.json (buffer_font_family) and starship.
-  if [ "$PKG" = brew ]; then
-    brew list --cask font-jetbrains-mono-nerd-font >/dev/null 2>&1 || brew install --cask font-jetbrains-mono-nerd-font
-  elif [ ! -d "$HOME/.local/share/fonts/JetBrainsMonoNF" ]; then
-    info "Installing JetBrainsMono Nerd Font…"
-    local tmp; tmp="$(mktemp -d)"
-    curl -fsSL -o "$tmp/f.tar.xz" https://github.com/ryanoasis/nerd-fonts/releases/latest/download/JetBrainsMono.tar.xz \
-      && mkdir -p "$HOME/.local/share/fonts/JetBrainsMonoNF" \
-      && tar -xJf "$tmp/f.tar.xz" -C "$HOME/.local/share/fonts/JetBrainsMonoNF" \
-      && { have fc-cache && fc-cache -f >/dev/null; }
-    rm -rf "$tmp"
-  fi
+  install_nerd_font
   link_file "$DOTFILES/zed/settings.json" "$HOME/.config/zed/settings.json"
   link_file "$DOTFILES/zed/keymap.json"   "$HOME/.config/zed/keymap.json"
   [ -x /Applications/Zed.app/Contents/MacOS/cli ] && ! have zed && { mkdir -p "$HOME/.local/bin"; ln -sf /Applications/Zed.app/Contents/MacOS/cli "$HOME/.local/bin/zed"; ok "linked zed CLI"; }
@@ -190,7 +179,7 @@ mod_zed_run() {
 
 # ---- claude code ---------------------------------------------------------
 mod_claude_label="Claude Code"
-mod_claude_desc="Anthropic's CLI coding agent + custom statusline"
+mod_claude_desc="Anthropic's CLI coding agent + statusline + Nerd Font icons"
 mod_claude_detect() { have claude; }
 mod_claude_run() {
   if have claude; then
@@ -200,6 +189,7 @@ mod_claude_run() {
     curl -fsSL https://claude.ai/install.sh | bash
   fi
   have jq || pkg_install jq
+  install_nerd_font   # statusline glyphs (battery, clock, ...) need it in the terminal
   # Statusline: link script, register it in ~/.claude/settings.json (merge, keep other keys).
   link_file "$DOTFILES/claude/statusline.sh" "$HOME/.claude/statusline.sh"
   local cfg="$HOME/.claude/settings.json" tmp
@@ -233,6 +223,21 @@ mod_conda_run() {
 }
 
 # ---- helpers -------------------------------------------------------------
+# JetBrainsMono Nerd Font: Zed fonts + statusline icons. Idempotent.
+install_nerd_font() {
+  if [ "$PKG" = brew ]; then
+    brew list --cask font-jetbrains-mono-nerd-font >/dev/null 2>&1 || brew install --cask font-jetbrains-mono-nerd-font
+  elif [ ! -d "$HOME/.local/share/fonts/JetBrainsMonoNF" ]; then
+    info "Installing JetBrainsMono Nerd Font…"
+    local tmp; tmp="$(mktemp -d)"
+    curl -fsSL -o "$tmp/f.tar.xz" https://github.com/ryanoasis/nerd-fonts/releases/latest/download/JetBrainsMono.tar.xz \
+      && mkdir -p "$HOME/.local/share/fonts/JetBrainsMonoNF" \
+      && tar -xJf "$tmp/f.tar.xz" -C "$HOME/.local/share/fonts/JetBrainsMonoNF" \
+      && { have fc-cache && fc-cache -f >/dev/null; }
+    rm -rf "$tmp"
+  fi
+}
+
 _clone_or_skip() {  # _clone_or_skip <url> <dir>
   local url="$1" dir="$2"
   if [ -d "$dir/.git" ]; then log "present: $dir"; else
