@@ -29,6 +29,9 @@ alias m=micromamba
 # GitHub Copilot CLI
 alias '??'='gh copilot suggest'
 
+# Claude Code
+alias cl=claude
+
 # Manage these dotfiles from anywhere
 #   dotfiles update   pull latest + refresh Zed/Claude (fonts, configs)
 #   dotfiles setup    re-run the install wizard (pass flags, e.g. --all)
