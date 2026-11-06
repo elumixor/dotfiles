@@ -300,9 +300,17 @@ __chunk_1="$( {
       __rt="$(__reset_in "$__rr")"; [ -n "$__rt" ] && __emit '2;91' " $__rt"
     fi
     __emit '2;33' ' / '
-    __emit '2;33' "${__r7}%"
-    if [ "$(__norm_int "$__r7")" -gt 50 ]; then
-      __rt="$(__reset_in "$__rw")"; [ -n "$__rt" ] && __emit '2;33' " $__rt"
+    # Weekly pace: budget = 100%/7d; over budget for elapsed time -> orange + days left, else green
+    __wleft=$(( ${__rw:-0} - $(__tick) ))
+    __wstyle='38;5;114'; __wshow=0
+    if [ "$__wleft" -gt 0 ] && [ "$__wleft" -le 604800 ]; then
+      if awk -v u="$__r7" -v l="$__wleft" 'BEGIN{ exit !(u > (604800 - l) / 604800 * 100) }'; then
+        __wstyle='38;5;208'; __wshow=1
+      fi
+    fi
+    __emit "$__wstyle" "${__r7}%"
+    if [ "$__wshow" = 1 ] && [ "$(__norm_int "$__r7")" -ge 10 ]; then
+      __rt="$(__reset_in "$__rw")"; [ -n "$__rt" ] && __emit "$__wstyle" " $__rt"
     fi
   else
     __emit '2;91' '--'
