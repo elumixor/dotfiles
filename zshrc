@@ -98,3 +98,5 @@ claude() {
   esac
 }
 # pai channel end
+alias claude-local='CLAUDE_CODE_AUTO_COMPACT_WINDOW=60000 CLAUDE_CODE_DISABLE_NONESSENTIAL_TRAFFIC=1 ollama launch claude --model gemma4-local -y --'
+alias ai='pi -p --no-tools --no-session --no-context-files'
